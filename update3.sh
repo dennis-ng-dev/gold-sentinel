@@ -1,3 +1,16 @@
+#!/bin/bash
+set -e
+
+echo "⬙ Gold Sentinel — Upgrade: fetch mỗi 15 phút"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+if [ ! -d ".git" ]; then
+    echo "❌ cd gold-sentinel trước!"
+    exit 1
+fi
+
+# ------- Workflow: 15 phút -------
+cat > .github/workflows/gold-sentinel.yml << 'EOF'
 name: Gold Sentinel
 
 on:
@@ -58,3 +71,26 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GOLD_API_KEY: ${{ secrets.GOLD_API_KEY }}
         run: python run_daily.py
+EOF
+echo "  ✅ Workflow: mỗi 15 phút (T2-T6), 2h (T7-CN)"
+
+# ------- Dashboard: refresh 15 phút -------
+sed -i '' 's/5\*60\*1000/15*60*1000/g' docs/index.html 2>/dev/null || sed -i 's/5\*60\*1000/15*60*1000/g' docs/index.html
+sed -i '' 's/60\*60\*1000/15*60*1000/g' docs/index.html 2>/dev/null || sed -i 's/60\*60\*1000/15*60*1000/g' docs/index.html
+sed -i '' 's/Auto-refresh [0-9]* phút/Auto-refresh 15 phút/g' docs/index.html 2>/dev/null || sed -i 's/Auto-refresh [0-9]* phút/Auto-refresh 15 phút/g' docs/index.html
+echo "  ✅ Dashboard: refresh 15 phút"
+
+# ------- Push -------
+git add -A
+git commit -m "⚡ fetch every 15min (unlimited free API)"
+git pull --rebase
+git push
+
+echo ""
+echo "✅ Done!"
+echo ""
+echo "  📊 Fetch: mỗi 15 phút (T2-T6)"
+echo "  🌐 Dashboard refresh: 15 phút"
+echo "  📱 Telegram: 8h + 20h (không đổi)"
+echo "  💰 GitHub Actions: ~48 phút/ngày (free: 66 phút/ngày)"
+echo ""

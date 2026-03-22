@@ -371,7 +371,7 @@ footer p{font-size:10px;color:var(--text-darker);letter-spacing:2px;font-family:
 
   <footer>
     <p>⚠️ Không phải tư vấn tài chính. Chỉ mang tính tham khảo.<br>
-    Dữ liệu cập nhật mỗi giờ qua GitHub Actions · <span class="live-dot"></span>Auto-refresh 15 phút</p>
+    Dữ liệu cập nhật mỗi giờ qua GitHub Actions · <span class="live-dot"></span>Auto-refresh 5 phút</p>
   </footer>
 </div>
 
@@ -676,7 +676,7 @@ async function load(){
 
 // Init
 load();
-setInterval(load,15*60*1000);
+setInterval(load,5*60*1000);
 
 // Responsive chart redraw
 window.addEventListener("resize",()=>{load();});
