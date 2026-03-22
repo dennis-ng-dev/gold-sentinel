@@ -1,0 +1,59 @@
+name: Gold Sentinel
+
+on:
+  schedule:
+    - cron: '5 * * * 1-5'
+    - cron: '5 */6 * * 0,6'
+  workflow_dispatch:
+    inputs:
+      send_telegram:
+        description: 'Gửi Telegram?'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['true', 'false']
+
+jobs:
+  fetch-and-report:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests python-dotenv
+
+      - name: Fetch gold price
+        env:
+          GOLD_API_KEY: ${{ secrets.GOLD_API_KEY }}
+        run: python fetch_prices.py
+
+      - name: Commit price data
+        run: |
+          git config user.name "Gold Sentinel Bot"
+          git config user.email "bot@gold-sentinel"
+          git add data/
+          git diff --cached --quiet || git commit -m "📊 $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+
+      - name: Check if should send Telegram
+        id: tg
+        run: |
+          H=$(date -u +'%H')
+          M="${{ github.event.inputs.send_telegram }}"
+          if [ "$H" = "01" ] || [ "$H" = "13" ] || [ "$M" = "true" ]; then
+            echo "send=true" >> $GITHUB_OUTPUT
+          else
+            echo "send=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send Telegram report
+        if: steps.tg.outputs.send == 'true'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GOLD_API_KEY: ${{ secrets.GOLD_API_KEY }}
+        run: python run_daily.py
