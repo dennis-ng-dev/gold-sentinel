@@ -43,12 +43,16 @@ jobs:
         id: tg
         run: |
           H=$(date -u +'%H')
-          M=$(date -u +'%M')
           MANUAL="${{ github.event.inputs.send_telegram }}"
-          if ([ "$H" = "01" ] && [ "$M" -lt "15" ]) || ([ "$H" = "13" ] && [ "$M" -lt "15" ]) || [ "$MANUAL" = "true" ]; then
+          echo "Current UTC hour: $H"
+          echo "Manual trigger: $MANUAL"
+          # 01 UTC = 8h sáng VN, 13 UTC = 8h tối VN
+          if [ "$H" = "01" ] || [ "$H" = "13" ] || [ "$MANUAL" = "true" ]; then
             echo "send=true" >> $GITHUB_OUTPUT
+            echo ">>> Will send Telegram"
           else
             echo "send=false" >> $GITHUB_OUTPUT
+            echo ">>> Skip Telegram (not 01 or 13 UTC)"
           fi
 
       - name: Send Telegram report
