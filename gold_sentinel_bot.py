@@ -1,11 +1,13 @@
 """
 GOLD SENTINEL — Telegram Bot v3
-- Giá SJC thật từ sjc.com.vn
-- Free API first cho giá thế giới
+- Giá SJC thật từ sjc.com.vn/GoldPrice/Services/PriceService.ashx
+- Free API first cho giá thế giới, fallback goldapi.io
+- Timezone VN (UTC+7)
 """
-import os, json, requests, re
-from datetime import datetime, timedelta
-from html.parser import HTMLParser
+import os, json, requests
+from datetime import datetime, timezone, timedelta
+
+VN_TZ = timezone(timedelta(hours=7))
 
 try:
     from dotenv import load_dotenv
@@ -57,59 +59,26 @@ def fetch_gold_price():
     return fetch_free() or fetch_paid()
 
 # ---- SJC real price ----
-class SJCParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self.in_td = False; self.current_row = []; self.rows = []; self.current_data = ""
-    def handle_starttag(self, tag, attrs):
-        if tag == "td": self.in_td = True; self.current_data = ""
-    def handle_endtag(self, tag):
-        if tag == "td": self.in_td = False; self.current_row.append(self.current_data.strip())
-        elif tag == "tr":
-            if self.current_row: self.rows.append(self.current_row)
-            self.current_row = []
-    def handle_data(self, data):
-        if self.in_td: self.current_data += data
-
-def parse_p(text):
-    try:
-        num = int(re.sub(r'[^\d]', '', text.strip()))
-        if num > 1e6: return round(num/1e6, 1)
-        elif num > 1e4: return round(num/1e3, 1)
-        elif num > 100: return float(num)
-    except: pass
-    return 0
-
 def fetch_sjc():
     try:
-        r = requests.get("https://sjc.com.vn/giavang/textContent.php", timeout=10,
-                        headers={"User-Agent": "Mozilla/5.0", "Referer": "https://sjc.com.vn/gia-vang-online"})
+        r = requests.post(
+            "https://sjc.com.vn/GoldPrice/Services/PriceService.ashx",
+            data={"method": "GetCurrentGoldPricesByBranch", "BranchId": "1"},
+            headers={"Content-Type": "application/x-www-form-urlencoded",
+                     "Referer": "https://sjc.com.vn/gia-vang-online"},
+            timeout=10
+        )
         if r.status_code != 200: return None
-        text = r.text.strip()
-        # JSON
-        try:
-            data = json.loads(text)
-            if isinstance(data, list) and data:
-                item = data[0]
-                buy = item.get("buy",0) or item.get("mua",0) or item.get("buy_1l",0)
-                sell = item.get("sell",0) or item.get("ban",0) or item.get("sell_1l",0)
-                b = round(buy/1e6,1) if buy > 1e6 else (round(buy/1e3,1) if buy > 1e4 else buy)
-                s = round(sell/1e6,1) if sell > 1e6 else (round(sell/1e3,1) if sell > 1e4 else sell)
-                if b > 50 and s > 50: return {"buy": b, "sell": s, "real": True}
-        except: pass
-        # HTML
-        if "<t" in text.lower():
-            parser = SJCParser(); parser.feed(text)
-            for row in parser.rows:
-                if "SJC" in " ".join(row).upper():
-                    nums = [parse_p(c) for c in row if parse_p(c) > 50]
-                    if len(nums) >= 2: return {"buy": nums[0], "sell": nums[1], "real": True}
-            for row in parser.rows:
-                nums = [parse_p(c) for c in row if parse_p(c) > 50]
-                if len(nums) >= 2: return {"buy": nums[0], "sell": nums[1], "real": True}
-        # Regex
-        valid = [parse_p(p) for p in re.findall(r'[\d,.]+', text) if 50 < parse_p(p) < 500]
-        if len(valid) >= 2: return {"buy": valid[0], "sell": valid[1], "real": True}
+        d = r.json()
+        if not d.get("success") or not d.get("data"): return None
+        for item in d["data"]:
+            name = item.get("TypeName", "").upper()
+            if "1L" in name or "10L" in name or "1KG" in name:
+                buy = round(item["BuyValue"] / 1e6, 1)
+                sell = round(item["SellValue"] / 1e6, 1)
+                if buy > 50 and sell > 50:
+                    return {"buy": buy, "sell": sell, "real": True,
+                            "updated": d.get("latestDate", "")}
     except: pass
     return None
 
@@ -137,9 +106,9 @@ def analyze(gold):
         act="GIỮ — Uptrend xác nhận"; emoji="🟢"; alerts.append("✅ Trên $5,000")
     if abs(cpct) > ALERT_THRESHOLD_PCT:
         alerts.append(f"🔥 BẤT THƯỜNG: {'tăng' if cpct>0 else 'giảm'} {abs(cpct):.1f}%!")
-    today = datetime.now(); nf = None; dtf = None
+    today = datetime.now(VN_TZ); nf = None; dtf = None
     for m in FOMC_SCHEDULE:
-        md = datetime.strptime(m["date"], "%Y-%m-%d")
+        md = datetime.strptime(m["date"], "%Y-%m-%d").replace(tzinfo=VN_TZ)
         if md > today:
             nf=m; dtf=(md-today).days
             if dtf<=3: alerts.append(f"🚨 FOMC TRONG {dtf} NGÀY!")
@@ -163,13 +132,40 @@ def send_telegram(msg, parse_mode="HTML"):
     except Exception as e:
         print(f"[{datetime.now()}] Telegram error: {e}"); return False
 
+DATA_FILE = os.path.join(os.path.dirname(__file__), "data", "prices.json")
+
+def load_latest():
+    """Đọc giá mới nhất từ prices.json (đã fetch bởi fetch_prices.py)."""
+    try:
+        with open(DATA_FILE) as f:
+            d = json.load(f)
+        l = d.get("latest")
+        if not l: return None, None
+        gold = {"price": l["price"], "change": l.get("change",0),
+                "change_pct": l.get("change_pct",0),
+                "high_24h": l.get("high",0), "low_24h": l.get("low",0),
+                "source": l.get("source","")}
+        sjc = None
+        if l.get("sjc_buy",0) > 0:
+            sjc = {"buy": l["sjc_buy"], "sell": l["sjc_sell"],
+                   "real": l.get("sjc_real", False),
+                   "updated": l.get("sjc_updated", "")}
+        return gold, sjc
+    except Exception as e:
+        print(f"  load_latest error: {e}"); return None, None
+
 def build_daily_report():
-    gold = fetch_gold_price()
-    if not gold or gold["price"] == 0: return "⚠️ Không lấy được giá vàng."
-    sjc = get_sjc(gold["price"]); a = analyze(gold)
+    gold, sjc = load_latest()
+    if not gold:
+        # Fallback: fetch live nếu không đọc được file
+        gold = fetch_gold_price()
+        if not gold or gold["price"] == 0: return "⚠️ Không lấy được giá vàng."
+        sjc = get_sjc(gold["price"])
+
+    a = analyze(gold)
     p = gold["price"]; ch = gold.get("change",0); cpct = gold.get("change_pct",0)
     icon = "🟢 ▲" if ch >= 0 else "🔴 ▼"
-    now = datetime.now().strftime("%d/%m/%Y %H:%M")
+    now = datetime.now(VN_TZ).strftime("%d/%m/%Y %H:%M")
 
     msg = f"""⬙ <b>GOLD SENTINEL</b> — {now}
 ━━━━━━━━━━━━━━━━━━━━
@@ -178,8 +174,9 @@ def build_daily_report():
     if gold.get("high_24h") and gold.get("low_24h"):
         msg += f"\n   H: ${gold['high_24h']:,.1f} | L: ${gold['low_24h']:,.1f}"
     if sjc:
-        tag = "✅" if sjc.get("real") else "📊 ước tính"
-        msg += f"\n\n🏦 <b>SJC {tag}:</b>\n   Mua: {sjc['buy']}tr | Bán: {sjc['sell']}tr"
+        tag = "✅ giá thật" if sjc.get("real") else "📊 ước tính"
+        updated = f" · {sjc['updated']}" if sjc.get("updated") else ""
+        msg += f"\n\n🏦 <b>SJC {tag}:</b>{updated}\n   Mua: {sjc['buy']}tr | Bán: {sjc['sell']}tr"
     msg += f"""
 
 ━━━━━━━━━━━━━━━━━━━━
@@ -204,9 +201,10 @@ def build_daily_report():
     return msg
 
 def send_fomc_reminder():
-    today = datetime.now()
+    today = datetime.now(VN_TZ)
     for m in FOMC_SCHEDULE:
-        md = datetime.strptime(m["date"], "%Y-%m-%d"); d = (md-today).days
+        md = datetime.strptime(m["date"], "%Y-%m-%d").replace(tzinfo=VN_TZ)
+        d = (md-today).days
         if d == 1:
             sep = "📈 DOT PLOT!" if m.get('has_sep') else "📋 Thường"
             send_telegram(f"🚨 <b>FOMC NGÀY MAI!</b>\n📅 {md.strftime('%d/%m/%Y')} {sep}\n⏰ ~2:00 AM VN\n<i>⚠️ Không phải tư vấn tài chính.</i>")
