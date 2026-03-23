@@ -29,7 +29,7 @@ Tìm kiếm và tóm tắt:
 
 Trả lời bằng tiếng Việt, ngắn gọn, mỗi tin 1-2 câu. Tối đa 5 tin quan trọng nhất."""
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key={GEMINI_API_KEY}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
         "tools": [{"google_search": {}}],
