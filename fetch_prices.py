@@ -125,11 +125,9 @@ def save_prices(data):
     with open(PRICES_FILE, "w") as f: json.dump(data, f, indent=2, ensure_ascii=False)
 
 def snap_to_slot(dt):
-    """Snap thời gian về mốc :00 hoặc :30 gần nhất."""
-    snapped_min = 0 if dt.minute < 15 else (30 if dt.minute < 45 else 0)
-    snapped_hour = dt.hour if snapped_min != 0 or dt.minute < 45 else (dt.hour + 1) % 24
-    return dt.replace(minute=snapped_min, second=0, microsecond=0,
-                      hour=snapped_hour)
+    """Snap thời gian về mốc :00 hoặc :30 (floor, không round lên)."""
+    snapped_min = 0 if dt.minute < 30 else 30
+    return dt.replace(minute=snapped_min, second=0, microsecond=0)
 
 def main():
     vn = timezone(timedelta(hours=7)); now = datetime.now(vn)
