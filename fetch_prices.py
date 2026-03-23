@@ -9,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 PRICES_FILE = os.path.join(DATA_DIR, "prices.json")
 MAX_HISTORY_DAYS = 90
+DAILY_HISTORY_DAYS = 30
 GOLD_API_KEY = os.getenv("GOLD_API_KEY", "")
 
 def fetch_from_gold_api_free():
@@ -43,6 +44,31 @@ def fetch_gold_price():
             print(f"  ✅ World: ${r['price']:,.1f} ({r['source']})")
             return r
     return None
+
+# ---- Historical daily from stooq ----
+def fetch_daily_history():
+    try:
+        r = requests.get("https://stooq.com/q/d/l/?s=xauusd&i=d", timeout=15,
+                         headers={"User-Agent": "Mozilla/5.0"})
+        if r.status_code != 200:
+            print(f"  stooq status: {r.status_code}"); return []
+        lines = r.text.strip().splitlines()
+        # CSV: Date,Open,High,Low,Close
+        cutoff = (datetime.now(timezone(timedelta(hours=7))) - timedelta(days=DAILY_HISTORY_DAYS)).strftime("%Y-%m-%d")
+        result = []
+        for line in lines[1:]:  # skip header
+            parts = line.split(",")
+            if len(parts) < 5: continue
+            date, close = parts[0], parts[4]
+            if date < cutoff: continue
+            try:
+                result.append({"date": date, "price": float(close), "source": "stooq"})
+            except ValueError:
+                continue
+        print(f"  ✅ stooq: {len(result)} daily records (last {DAILY_HISTORY_DAYS}d)")
+        return sorted(result, key=lambda x: x["date"])
+    except Exception as e:
+        print(f"  stooq error: {e}"); return []
 
 # ---- SJC ----
 def fetch_sjc_real():
@@ -98,6 +124,13 @@ def save_prices(data):
     os.makedirs(DATA_DIR, exist_ok=True)
     with open(PRICES_FILE, "w") as f: json.dump(data, f, indent=2, ensure_ascii=False)
 
+def snap_to_slot(dt):
+    """Snap thời gian về mốc :00 hoặc :30 gần nhất."""
+    snapped_min = 0 if dt.minute < 15 else (30 if dt.minute < 45 else 0)
+    snapped_hour = dt.hour if snapped_min != 0 or dt.minute < 45 else (dt.hour + 1) % 24
+    return dt.replace(minute=snapped_min, second=0, microsecond=0,
+                      hour=snapped_hour)
+
 def main():
     vn = timezone(timedelta(hours=7)); now = datetime.now(vn)
     print(f"⬙ Gold Sentinel v3 — {now.strftime('%Y-%m-%d %H:%M')} VN")
@@ -109,9 +142,17 @@ def main():
     print("📌 SJC price:")
     sjc = fetch_sjc(gold["price"])
     print()
+    print("📌 Daily history:")
+    daily_hist = fetch_daily_history()
+    print()
+
+    # Snap timestamp về mốc :00 hoặc :30
+    snapped = snap_to_slot(now)
+    slot_key = snapped.strftime("%Y-%m-%dT%H:%M")
 
     data = load_prices()
-    rec = {"timestamp": now.isoformat(), "date": now.strftime("%Y-%m-%d"), "hour": now.hour, "minute": now.minute,
+    rec = {"timestamp": snapped.isoformat(), "slot": slot_key,
+           "date": snapped.strftime("%Y-%m-%d"), "hour": snapped.hour, "minute": snapped.minute,
            "price": gold["price"], "change": gold["change"], "change_pct": gold["change_pct"],
            "high": gold["high"], "low": gold["low"], "source": gold["source"]}
     if sjc:
@@ -124,19 +165,27 @@ def main():
 
     data["latest"] = rec
     hist = data.get("history", [])
+    # Dedup theo slot :00/:30 — giữ record mới nhất trong slot
+    hist = [h for h in hist if h.get("slot") != slot_key]
     hist.append(rec)
     cutoff = (now - timedelta(days=MAX_HISTORY_DAYS)).isoformat()
     hist = [h for h in hist if h["timestamp"] >= cutoff]
-    daily = {}
+    hist.sort(key=lambda x: x["timestamp"])
+
+    # Merge daily_hist với history (history ưu tiên cho cùng ngày)
+    merged_daily = {r["date"]: r for r in daily_hist}
     for h in hist:
         d = h["date"]
-        if d not in daily or h["timestamp"] > daily[d]["timestamp"]: daily[d] = h
+        if d not in merged_daily or h["timestamp"] > merged_daily[d].get("timestamp",""):
+            merged_daily[d] = h
+    daily_sorted = sorted(merged_daily.values(), key=lambda x: x["date"])
 
-    data["history"] = hist; data["daily"] = sorted(daily.values(), key=lambda x: x["date"])
+    data["history"] = hist
+    data["daily"] = daily_sorted
     data["updated_at"] = now.isoformat(); data["total_records"] = len(hist)
     save_prices(data)
     real_tag = "✅ REAL" if sjc and sjc.get("real") else "📊 EST"
-    print(f"💾 Saved: {len(hist)} records | ${gold['price']:,.1f} | SJC {sjc['buy'] if sjc else '?'}tr/{sjc['sell'] if sjc else '?'}tr [{real_tag}]")
+    print(f"💾 Saved: {len(hist)} intraday | {len(daily_sorted)} daily | ${gold['price']:,.1f} | SJC {sjc['buy'] if sjc else '?'}tr/{sjc['sell'] if sjc else '?'}tr [{real_tag}]")
     return True
 
 if __name__ == "__main__": main()

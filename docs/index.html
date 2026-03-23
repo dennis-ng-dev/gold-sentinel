@@ -507,7 +507,7 @@ function render(d){
   document.getElementById("m-src").textContent=(l.source||"").split(".")[0]||"--";
 
   // Chart
-  initCharts(d.history||[]);
+  initCharts(d.history||[], d.daily||[]);
 
   // FOMC Timeline
   renderFOMC(a);
@@ -635,18 +635,9 @@ function switchChart(mode){
   drawChart(_chartData[mode],mode);
 }
 
-function buildDailyFromHistory(history){
-  const map={};
-  history.forEach(r=>{
-    const d=r.date;
-    if(!map[d]||r.timestamp>map[d].timestamp) map[d]=r;
-  });
-  return Object.values(map).sort((a,b)=>a.date.localeCompare(b.date));
-}
-
-function initCharts(history){
+function initCharts(history, daily){
   _chartData.intraday=history;
-  _chartData.daily=buildDailyFromHistory(history);
+  _chartData.daily=daily&&daily.length?daily:history;
   drawChart(_chartData[_chartMode],_chartMode);
 }
 
@@ -710,7 +701,7 @@ function drawChart(data,mode){
   ctx.beginPath();ctx.arc(lx,ly,3.5,0,Math.PI*2);ctx.fillStyle="#d4a017";ctx.fill();
 
   // X-axis labels — tính step để không overlap
-  const maxLabels=Math.floor(W/70);
+  const maxLabels=Math.floor(W/72);
   const step=Math.max(1,Math.floor(data.length/maxLabels));
   ctx.fillStyle="#6b6050";ctx.font="9px 'JetBrains Mono'";ctx.textAlign="center";
   for(let i=0;i<data.length;i+=step){
@@ -719,15 +710,17 @@ function drawChart(data,mode){
     if(mode==='daily'){
       label=r.date.slice(5).replace("-","/");
     } else {
-      const ts=new Date(r.timestamp);
-      const dd=String(ts.getDate()).padStart(2,'0');
-      const mm=String(ts.getMonth()+1).padStart(2,'0');
+      // Dùng slot (đã snap :00/:30), fallback về timestamp
+      const src=r.slot||r.timestamp;
+      const ts=new Date(src);
       const hh=String(ts.getHours()).padStart(2,'0');
       const mi=String(ts.getMinutes()).padStart(2,'0');
-      label=`${hh}:${mi} ${dd}/${mm}`;
+      const dd=String(ts.getDate()).padStart(2,'0');
+      const mm=String(ts.getMonth()+1).padStart(2,'0');
+      // Chỉ hiện ngày khi là mốc đầu ngày (00:00) hoặc điểm đầu tiên
+      label=(mi==='00'&&hh==='00')||i===0?`${dd}/${mm}`:`${hh}:${mi}`;
     }
     const x=toX(i);
-    // Clamp label không bị tràn trái/phải
     const tw=ctx.measureText(label).width;
     const clampedX=Math.max(tw/2,Math.min(CW-tw/2-PAD_RIGHT,x));
     ctx.fillText(label,clampedX,PAD_TOP+H+16);
