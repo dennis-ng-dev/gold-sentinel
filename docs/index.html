@@ -646,9 +646,9 @@ function drawChart(data,mode){
   const tooltip=document.getElementById("chart-tooltip");
   const ctx=canvas.getContext("2d");
   const dpr=window.devicePixelRatio||1;
-  const PAD_LEFT=8,PAD_RIGHT=60,PAD_TOP=10,PAD_BOTTOM=28;
+  const PAD_LEFT=52,PAD_RIGHT=64,PAD_TOP=10,PAD_BOTTOM=28;
   const rect=canvas.parentElement.getBoundingClientRect();
-  const CW=rect.width;const CH=220;
+  const CW=rect.width;const CH=230;
   canvas.width=CW*dpr;canvas.height=CH*dpr;
   canvas.style.width=CW+"px";canvas.style.height=CH+"px";
   ctx.scale(dpr,dpr);
@@ -661,46 +661,56 @@ function drawChart(data,mode){
     ctx.fillText("Chờ thêm dữ liệu...",CW/2,CH/2);return;
   }
 
+  // --- Scales XAU ---
   const prices=data.map(d=>d.price);
-  const mn=Math.min(...prices),mx=Math.max(...prices);
-  const pad=(mx-mn)*0.1||50;
-  const yMin=mn-pad,yMax=mx+pad,yRng=yMax-yMin;
+  const xauMn=Math.min(...prices),xauMx=Math.max(...prices);
+  const xauPad=(xauMx-xauMn)*0.12||80;
+  const yMin=xauMn-xauPad,yMax=xauMx+xauPad,yRng=yMax-yMin;
   const toX=i=>PAD_LEFT+(i/(data.length-1))*W;
   const toY=p=>PAD_TOP+H-((p-yMin)/yRng)*H;
 
-  // Grid lines
+  // --- Y-axis XAU (trái) ---
+  ctx.save();ctx.fillStyle="#6b6050";ctx.font="9px 'JetBrains Mono'";ctx.textAlign="right";
+  const yTicks=4;
+  for(let i=0;i<=yTicks;i++){
+    const v=yMin+(yRng/yTicks)*i;
+    const y=toY(v);
+    ctx.fillText("$"+Math.round(v).toLocaleString("en"),PAD_LEFT-5,y+3);
+    ctx.save();ctx.strokeStyle="rgba(255,255,255,0.04)";ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(PAD_LEFT,y);ctx.lineTo(PAD_LEFT+W,y);ctx.stroke();ctx.restore();
+  }
+  ctx.restore();
+
+  // --- Level lines ---
   const levels=[{v:5000,c:"#10b981",l:"$5,000"},{v:4550,c:"#f59e0b",l:"$4,550"},{v:4360,c:"#f97316",l:"$4,360"},{v:4200,c:"#ef4444",l:"$4,200"}];
   levels.forEach(lv=>{
     const y=toY(lv.v);if(y<PAD_TOP||y>PAD_TOP+H)return;
-    ctx.save();ctx.strokeStyle=lv.c;ctx.globalAlpha=0.25;ctx.setLineDash([5,4]);ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(PAD_LEFT,y);ctx.lineTo(PAD_LEFT+W,y);ctx.stroke();
-    ctx.setLineDash([]);ctx.globalAlpha=0.8;
-    ctx.fillStyle=lv.c;ctx.font="9px 'JetBrains Mono'";ctx.textAlign="left";
-    ctx.fillText(lv.l,PAD_LEFT+W+4,y+3);ctx.restore();
+    ctx.save();ctx.strokeStyle=lv.c;ctx.globalAlpha=0.2;ctx.setLineDash([5,4]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(PAD_LEFT,y);ctx.lineTo(PAD_LEFT+W,y);ctx.stroke();ctx.restore();
   });
 
-  // Area fill
+  // --- Area fill XAU ---
   ctx.save();
   ctx.beginPath();ctx.moveTo(toX(0),toY(prices[0]));
   for(let i=1;i<prices.length;i++)ctx.lineTo(toX(i),toY(prices[i]));
   ctx.lineTo(toX(prices.length-1),PAD_TOP+H);ctx.lineTo(toX(0),PAD_TOP+H);ctx.closePath();
   const grad=ctx.createLinearGradient(0,PAD_TOP,0,PAD_TOP+H);
-  grad.addColorStop(0,"rgba(212,160,23,0.2)");grad.addColorStop(1,"rgba(212,160,23,0.01)");
+  grad.addColorStop(0,"rgba(212,160,23,0.18)");grad.addColorStop(1,"rgba(212,160,23,0.01)");
   ctx.fillStyle=grad;ctx.fill();ctx.restore();
 
-  // Price line
+  // --- XAU price line ---
   ctx.save();
   ctx.beginPath();ctx.moveTo(toX(0),toY(prices[0]));
   for(let i=1;i<prices.length;i++)ctx.lineTo(toX(i),toY(prices[i]));
   ctx.strokeStyle="#d4a017";ctx.lineWidth=2;ctx.lineJoin="round";ctx.lineCap="round";ctx.stroke();
   ctx.restore();
 
-  // Last dot
+  // --- Last dot XAU ---
   const lx=toX(prices.length-1),ly=toY(prices[prices.length-1]);
-  ctx.beginPath();ctx.arc(lx,ly,6,0,Math.PI*2);ctx.fillStyle="rgba(212,160,23,0.2)";ctx.fill();
-  ctx.beginPath();ctx.arc(lx,ly,3.5,0,Math.PI*2);ctx.fillStyle="#d4a017";ctx.fill();
+  ctx.beginPath();ctx.arc(lx,ly,5,0,Math.PI*2);ctx.fillStyle="rgba(212,160,23,0.2)";ctx.fill();
+  ctx.beginPath();ctx.arc(lx,ly,3,0,Math.PI*2);ctx.fillStyle="#d4a017";ctx.fill();
 
-  // X-axis labels — tính step để không overlap
+  // --- X-axis labels ---
   const maxLabels=Math.floor(W/72);
   const step=Math.max(1,Math.floor(data.length/maxLabels));
   ctx.fillStyle="#6b6050";ctx.font="9px 'JetBrains Mono'";ctx.textAlign="center";
@@ -710,57 +720,53 @@ function drawChart(data,mode){
     if(mode==='daily'){
       label=r.date.slice(5).replace("-","/");
     } else {
-      // Dùng slot (đã snap :00/:30), fallback về timestamp
       const src=r.slot||r.timestamp;
       const ts=new Date(src);
       const hh=String(ts.getHours()).padStart(2,'0');
       const mi=String(ts.getMinutes()).padStart(2,'0');
       const dd=String(ts.getDate()).padStart(2,'0');
       const mm=String(ts.getMonth()+1).padStart(2,'0');
-      // Chỉ hiện ngày khi là mốc đầu ngày (00:00) hoặc điểm đầu tiên
       label=(mi==='00'&&hh==='00')||i===0?`${dd}/${mm}`:`${hh}:${mi}`;
     }
     const x=toX(i);
     const tw=ctx.measureText(label).width;
-    const clampedX=Math.max(tw/2,Math.min(CW-tw/2-PAD_RIGHT,x));
+    const clampedX=Math.max(PAD_LEFT+tw/2,Math.min(PAD_LEFT+W-tw/2,x));
     ctx.fillText(label,clampedX,PAD_TOP+H+16);
   }
 
-  // Tooltip interaction
-  canvas._chartData=data;canvas._mode=mode;
-  canvas._toX=toX;canvas._toY=toY;canvas._PAD_LEFT=PAD_LEFT;canvas._W=W;
-
+  // --- Tooltip ---
   canvas.onmousemove=function(e){
     const bnd=canvas.getBoundingClientRect();
-    const mx=(e.clientX-bnd.left);
+    const mx=e.clientX-bnd.left;
     const idx=Math.round((mx-PAD_LEFT)/W*(data.length-1));
     if(idx<0||idx>=data.length){tooltip.style.display='none';return;}
     const r=data[idx];
-    const ttx=toX(idx);const tty=toY(r.price);
+    const ttx=toX(idx),tty=toY(r.price);
 
-    // Draw crosshair
     drawChart(data,mode);
-    ctx.save();ctx.strokeStyle='rgba(212,160,23,0.4)';ctx.setLineDash([3,3]);ctx.lineWidth=1;
+    ctx.save();ctx.strokeStyle='rgba(212,160,23,0.35)';ctx.setLineDash([3,3]);ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(ttx,PAD_TOP);ctx.lineTo(ttx,PAD_TOP+H);ctx.stroke();
     ctx.beginPath();ctx.moveTo(PAD_LEFT,tty);ctx.lineTo(PAD_LEFT+W,tty);ctx.stroke();
     ctx.setLineDash([]);
     ctx.beginPath();ctx.arc(ttx,tty,4,0,Math.PI*2);ctx.fillStyle="#d4a017";ctx.fill();
     ctx.restore();
 
-    // Tooltip content
     let timeStr;
     if(mode==='daily'){
       timeStr=r.date;
     } else {
-      const ts=new Date(r.timestamp);
-      timeStr=ts.toLocaleString("vi-VN",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+      const ts=new Date(r.slot||r.timestamp);
+      const dd=String(ts.getDate()).padStart(2,'0');
+      const mm=String(ts.getMonth()+1).padStart(2,'0');
+      const hh=String(ts.getHours()).padStart(2,'0');
+      const mi=String(ts.getMinutes()).padStart(2,'0');
+      timeStr=`${dd}/${mm} ${hh}:${mi}`;
     }
     document.getElementById('tt-time').textContent=timeStr;
     document.getElementById('tt-price').textContent='$'+r.price.toLocaleString("en",{minimumFractionDigits:1,maximumFractionDigits:1});
-    const sjcTxt=r.sjc_buy&&r.sjc_buy>0?`SJC: ${r.sjc_buy}tr / ${r.sjc_sell}tr`:'';
+    const sjcTxt=(r.sjc_buy>0&&r.sjc_sell>0)?`SJC: ${r.sjc_buy}tr / ${r.sjc_sell}tr`:'';
     document.getElementById('tt-sjc').textContent=sjcTxt;
 
-    // Position tooltip — tránh tràn sang phải
     tooltip.style.display='block';
     const tw=tooltip.offsetWidth;
     let tx=e.clientX-bnd.left+14;

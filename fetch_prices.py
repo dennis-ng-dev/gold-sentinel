@@ -140,7 +140,19 @@ def main():
     if not gold: print("  ❌ Failed!"); return False
     print()
     print("📌 SJC price:")
-    sjc = fetch_sjc(gold["price"])
+    snapped = snap_to_slot(now)
+    # Fetch SJC mỗi 2 tiếng (giờ chẵn :00), các lần khác dùng giá cached
+    if snapped.minute == 0 and snapped.hour % 2 == 0:
+        sjc = fetch_sjc(gold["price"])
+    else:
+        prev = load_prices().get("latest", {})
+        if prev.get("sjc_buy", 0) > 0:
+            sjc = {"buy": prev["sjc_buy"], "sell": prev["sjc_sell"],
+                   "source": prev.get("sjc_source", "cached"), "real": prev.get("sjc_real", False),
+                   "updated": prev.get("sjc_updated", "")}
+            print(f"  ⏭ SJC cached: {sjc['buy']}tr / {sjc['sell']}tr")
+        else:
+            sjc = fetch_sjc(gold["price"])
     print()
     print("📌 Daily history:")
     daily_hist = fetch_daily_history()
