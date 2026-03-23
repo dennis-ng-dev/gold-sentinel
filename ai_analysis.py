@@ -29,28 +29,39 @@ Tìm kiếm và tóm tắt:
 
 Trả lời bằng tiếng Việt, ngắn gọn, mỗi tin 1-2 câu. Tối đa 5 tin quan trọng nhất."""
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key={GEMINI_API_KEY}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
         "tools": [{"google_search": {}}],
         "generationConfig": {"maxOutputTokens": 1024, "temperature": 0.3}
     }
 
-    try:
-        r = requests.post(url, json=payload, timeout=30)
-        if r.status_code != 200:
-            print(f"  Gemini error {r.status_code}: {r.text[:200]}")
+    models = [
+        "gemini-2.5-flash-preview-05-20",
+        "gemini-2.0-flash-lite",
+        "gemini-1.5-flash",
+    ]
+    for model in models:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={GEMINI_API_KEY}"
+        try:
+            r = requests.post(url, json=payload, timeout=30)
+            if r.status_code == 404:
+                print(f"  Gemini {model}: not available, trying next...")
+                continue
+            if r.status_code != 200:
+                print(f"  Gemini error {r.status_code}: {r.text[:200]}")
+                return ""
+            data = r.json()
+            candidates = data.get("candidates", [])
+            if not candidates:
+                return ""
+            parts = candidates[0].get("content", {}).get("parts", [])
+            text = "".join(p.get("text", "") for p in parts if "text" in p)
+            print(f"  Gemini model used: {model}")
+            return text.strip()
+        except Exception as e:
+            print(f"  Gemini exception ({model}): {e}")
             return ""
-        data = r.json()
-        candidates = data.get("candidates", [])
-        if not candidates:
-            return ""
-        parts = candidates[0].get("content", {}).get("parts", [])
-        text = "".join(p.get("text", "") for p in parts if "text" in p)
-        return text.strip()
-    except Exception as e:
-        print(f"  Gemini exception: {e}")
-        return ""
+    return ""
 
 
 def analyze_with_claude(gold_price: float, change_pct: float, sjc_buy: float,
