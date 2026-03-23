@@ -572,15 +572,33 @@
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
       "sjc_updated": "16:32 23/03/2026"
+    },
+    {
+      "timestamp": "2026-03-24T01:30:00+07:00",
+      "slot": "2026-03-24T01:30",
+      "date": "2026-03-24",
+      "hour": 1,
+      "minute": 30,
+      "price": 4426.899902,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 163.0,
+      "sjc_sell": 166.0,
+      "sjc_source": "sjc.com.vn",
+      "sjc_real": true,
+      "sjc_updated": "16:32 23/03/2026"
     }
   ],
   "latest": {
-    "timestamp": "2026-03-24T01:00:00+07:00",
-    "slot": "2026-03-24T01:00",
+    "timestamp": "2026-03-24T01:30:00+07:00",
+    "slot": "2026-03-24T01:30",
     "date": "2026-03-24",
     "hour": 1,
-    "minute": 0,
-    "price": 4423.799805,
+    "minute": 30,
+    "price": 4426.899902,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -593,6 +611,106 @@
     "sjc_updated": "16:32 23/03/2026"
   },
   "daily": [
+    {
+      "date": "2026-02-23",
+      "price": 5227.605,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-02-24",
+      "price": 5143.935,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-02-25",
+      "price": 5165.025,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-02-26",
+      "price": 5185.255,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-02-27",
+      "price": 5263.825,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-02",
+      "price": 5322.165,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-03",
+      "price": 5088.505,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-04",
+      "price": 5141.395,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-05",
+      "price": 5081.155,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-06",
+      "price": 5153.265,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-09",
+      "price": 5133.97,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-10",
+      "price": 5191.93,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-11",
+      "price": 5181.99,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-12",
+      "price": 5078.39,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-13",
+      "price": 5019.83,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-16",
+      "price": 5010.69,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-17",
+      "price": 5003.05,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-18",
+      "price": 4836.86,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-19",
+      "price": 4655.29,
+      "source": "stooq"
+    },
+    {
+      "date": "2026-03-20",
+      "price": 4493.95,
+      "source": "stooq"
+    },
     {
       "timestamp": "2026-03-23T23:30:00+07:00",
       "slot": "2026-03-23T23:30",
@@ -612,12 +730,12 @@
       "sjc_updated": "16:32 23/03/2026"
     },
     {
-      "timestamp": "2026-03-24T01:00:00+07:00",
-      "slot": "2026-03-24T01:00",
+      "timestamp": "2026-03-24T01:30:00+07:00",
+      "slot": "2026-03-24T01:30",
       "date": "2026-03-24",
       "hour": 1,
-      "minute": 0,
-      "price": 4423.799805,
+      "minute": 30,
+      "price": 4426.899902,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -630,6 +748,6 @@
       "sjc_updated": "16:32 23/03/2026"
     }
   ],
-  "updated_at": "2026-03-24T01:15:21.289795+07:00",
-  "total_records": 33
+  "updated_at": "2026-03-24T01:30:23.866602+07:00",
+  "total_records": 34
 }
