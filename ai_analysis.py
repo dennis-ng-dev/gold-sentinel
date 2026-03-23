@@ -57,7 +57,6 @@ Trả lời bằng tiếng Việt, ngắn gọn, mỗi tin 1-2 câu. Tối đa 5
             parts = candidates[0].get("content", {}).get("parts", [])
             text = "".join(p.get("text", "") for p in parts if "text" in p)
             print(f"  Gemini model used: {model}")
-            print(f"  Gemini raw: {text[:300]}")
             return text.strip()
         except Exception as e:
             print(f"  Gemini exception ({model}): {e}")
