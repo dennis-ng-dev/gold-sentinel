@@ -139,18 +139,23 @@ def main():
     print()
     print("📌 SJC price:")
     snapped = snap_to_slot(now)
-    # Fetch SJC mỗi 2 tiếng (giờ chẵn :00), các lần khác dùng giá cached
-    if snapped.minute == 0 and snapped.hour % 2 == 0:
-        sjc = fetch_sjc(gold["price"])
-    else:
-        prev = load_prices().get("latest", {})
-        if prev.get("sjc_buy", 0) > 0:
-            sjc = {"buy": prev["sjc_buy"], "sell": prev["sjc_sell"],
-                   "source": prev.get("sjc_source", "cached"), "real": prev.get("sjc_real", False),
-                   "updated": prev.get("sjc_updated", "")}
-            print(f"  ⏭ SJC cached: {sjc['buy']}tr / {sjc['sell']}tr")
+    # Fetch SJC mỗi lần, so sánh sjc_updated — chỉ update khi SJC có giá mới
+    prev = load_prices().get("latest", {})
+    fresh = fetch_sjc_real()
+    if fresh:
+        prev_updated = prev.get("sjc_updated", "")
+        if fresh["updated"] != prev_updated:
+            print(f"  ✅ SJC mới: {fresh['buy']}tr / {fresh['sell']}tr ({fresh['updated']})")
+            sjc = fresh
         else:
-            sjc = fetch_sjc(gold["price"])
+            sjc = {"buy": fresh["buy"], "sell": fresh["sell"],
+                   "source": fresh["source"], "real": True,
+                   "updated": fresh["updated"]}
+            print(f"  ⏭ SJC không đổi: {sjc['buy']}tr / {sjc['sell']}tr ({sjc['updated']})")
+    else:
+        sjc = fetch_sjc_fallback(gold["price"])
+        if sjc:
+            print(f"  📊 SJC fallback estimate: {sjc['buy']}tr / {sjc['sell']}tr")
     print()
     print("📌 Daily history:")
     daily_hist = fetch_daily_history()
