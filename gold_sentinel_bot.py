@@ -17,6 +17,7 @@ except ImportError:
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
+TELEGRAM_CHAT_ID_2 = os.getenv("TELEGRAM_CHAT_ID_2", "")
 GOLD_API_KEY = os.getenv("GOLD_API_KEY", "")
 ALERT_THRESHOLD_PCT = 2.0
 
@@ -138,14 +139,18 @@ def analyze(gold):
 
 # ---- Telegram ----
 def send_telegram(msg, parse_mode="HTML"):
-    try:
-        r = requests.post(f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
-                         json={"chat_id":TELEGRAM_CHAT_ID,"text":msg,"parse_mode":parse_mode,"disable_web_page_preview":True}, timeout=10)
-        ok = r.status_code == 200
-        print(f"[{datetime.now()}] Telegram {'OK' if ok else 'FAIL: '+r.text}")
-        return ok
-    except Exception as e:
-        print(f"[{datetime.now()}] Telegram error: {e}"); return False
+    chat_ids = [cid for cid in [TELEGRAM_CHAT_ID, TELEGRAM_CHAT_ID_2] if cid]
+    ok = True
+    for cid in chat_ids:
+        try:
+            r = requests.post(f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
+                             json={"chat_id":cid,"text":msg,"parse_mode":parse_mode,"disable_web_page_preview":True}, timeout=10)
+            sent = r.status_code == 200
+            print(f"[{datetime.now()}] Telegram {cid} {'OK' if sent else 'FAIL: '+r.text}")
+            ok = ok and sent
+        except Exception as e:
+            print(f"[{datetime.now()}] Telegram {cid} error: {e}"); ok = False
+    return ok
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "data", "prices.json")
 
