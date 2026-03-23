@@ -234,13 +234,23 @@ footer p{font-size:10px;color:var(--text-darker);letter-spacing:2px;font-family:
   <!-- ===== TAB: DASHBOARD ===== -->
   <div class="tab active" id="tab-dashboard">
     <div class="grid-2">
-      <div class="card">
-        <div class="card-label">XAU/USD</div>
-        <div class="price-big" id="xau-price">--</div>
-        <div class="change" id="xau-change">--</div>
+      <div class="card" style="padding:0;overflow:hidden;min-height:120px;">
+        <div class="tradingview-widget-container" style="height:100%;">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+          {
+            "symbol": "PEPPERSTONE:XAUUSD",
+            "width": "100%",
+            "height": "100%",
+            "isTransparent": true,
+            "colorTheme": "dark",
+            "locale": "vi_VN"
+          }
+          </script>
+        </div>
       </div>
       <div class="card">
-        <div class="card-label">Vàng SJC (ước tính)</div>
+        <div class="card-label">Vàng SJC 1L · Giá thật <span id="sjc-real-badge" style="display:none;background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3);padding:1px 6px;border-radius:4px;font-size:9px;letter-spacing:1px;">REAL</span></div>
         <div class="sjc-flex">
           <div><div class="lbl">Mua</div><div class="val" id="sjc-buy">--</div></div>
           <div class="sep">|</div>
@@ -371,7 +381,7 @@ footer p{font-size:10px;color:var(--text-darker);letter-spacing:2px;font-family:
 
   <footer>
     <p>⚠️ Không phải tư vấn tài chính. Chỉ mang tính tham khảo.<br>
-    Dữ liệu cập nhật mỗi giờ qua GitHub Actions · <span class="live-dot"></span>Auto-refresh 15 phút</p>
+    XAU/USD realtime · SJC cập nhật mỗi 15 phút qua GitHub Actions · <span class="live-dot"></span>Auto-refresh 15 phút</p>
   </footer>
 </div>
 
@@ -462,14 +472,14 @@ function render(d){
   document.getElementById("act-text").textContent=a.emoji+" "+a.act;
   document.getElementById("fomc-days").textContent=a.df?a.df+" ngày":"--";
 
-  // Prices
-  document.getElementById("xau-price").textContent="$"+p.toLocaleString("en",{minimumFractionDigits:1});
-  const chEl=document.getElementById("xau-change");
-  chEl.textContent=(ch>=0?"▲ ":"▼ ")+Math.abs(ch).toFixed(1)+" ("+(cpct>=0?"+":"")+cpct.toFixed(1)+"%) · 24h";
-  chEl.className="change "+(ch>=0?"up":"down");
+  // SJC prices
   document.getElementById("sjc-buy").textContent=l.sjc_buy+"tr";
   document.getElementById("sjc-sell").textContent=l.sjc_sell+"tr";
-  document.getElementById("sjc-info").textContent="Premium ~28tr vs thế giới · "+l.source;
+  const badge=document.getElementById("sjc-real-badge");
+  if(l.sjc_real){badge.style.display="inline";}else{badge.style.display="none";}
+  const sjcUpdated=l.sjc_updated?` · SJC: ${l.sjc_updated}`:"";
+  const sjcTag=l.sjc_real?"Giá thật từ sjc.com.vn":"Ước tính (SJC API không phản hồi)";
+  document.getElementById("sjc-info").textContent=sjcTag+sjcUpdated;
 
   // Alerts
   const ac=document.getElementById("alerts");ac.innerHTML="";
