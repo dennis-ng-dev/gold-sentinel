@@ -261,8 +261,21 @@ footer p{font-size:10px;color:var(--text-darker);letter-spacing:2px;font-family:
     </div>
 
     <div class="card">
-      <div class="card-label">Biểu đồ giá · Intraday (15 phút)</div>
-      <canvas id="chart"></canvas>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div class="card-label" style="margin-bottom:0">Biểu đồ giá</div>
+        <div style="display:flex;gap:4px;">
+          <button id="btn-intraday" onclick="switchChart('intraday')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(212,160,23,0.4);background:rgba(212,160,23,0.15);color:var(--gold);font-family:monospace;font-size:10px;letter-spacing:1px;cursor:pointer;">INTRADAY</button>
+          <button id="btn-daily" onclick="switchChart('daily')" style="padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--text-dim);font-family:monospace;font-size:10px;letter-spacing:1px;cursor:pointer;">DAILY</button>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <canvas id="chart"></canvas>
+        <div id="chart-tooltip" style="display:none;position:absolute;background:#1e1b16;border:1px solid rgba(212,160,23,0.3);border-radius:8px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;pointer-events:none;white-space:nowrap;z-index:10;">
+          <div id="tt-time" style="color:var(--text-dim);margin-bottom:3px;"></div>
+          <div id="tt-price" style="color:var(--gold);font-weight:700;font-size:13px;"></div>
+          <div id="tt-sjc" style="color:var(--text-dim);margin-top:2px;font-size:10px;"></div>
+        </div>
+      </div>
     </div>
 
     <div class="card" id="alerts-card">
@@ -494,7 +507,7 @@ function render(d){
   document.getElementById("m-src").textContent=(l.source||"").split(".")[0]||"--";
 
   // Chart
-  drawChart(d.history||[]);
+  initCharts(d.history||[]);
 
   // FOMC Timeline
   renderFOMC(a);
@@ -608,65 +621,164 @@ function renderTelegramPreview(l,a){
 // ============================================================
 // CHART
 // ============================================================
-function drawChart(daily){
+let _chartMode='intraday';
+let _chartData={intraday:[],daily:[]};
+
+function switchChart(mode){
+  _chartMode=mode;
+  const bi=document.getElementById('btn-intraday');
+  const bd=document.getElementById('btn-daily');
+  const activeStyle='border:1px solid rgba(212,160,23,0.4);background:rgba(212,160,23,0.15);color:var(--gold);';
+  const inactiveStyle='border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--text-dim);';
+  bi.style.cssText=bi.style.cssText.replace(/border:[^;]+;background:[^;]+;color:[^;]+;/,'')+(mode==='intraday'?activeStyle:inactiveStyle);
+  bd.style.cssText=bd.style.cssText.replace(/border:[^;]+;background:[^;]+;color:[^;]+;/,'')+(mode==='daily'?activeStyle:inactiveStyle);
+  drawChart(_chartData[mode],mode);
+}
+
+function buildDailyFromHistory(history){
+  const map={};
+  history.forEach(r=>{
+    const d=r.date;
+    if(!map[d]||r.timestamp>map[d].timestamp) map[d]=r;
+  });
+  return Object.values(map).sort((a,b)=>a.date.localeCompare(b.date));
+}
+
+function initCharts(history){
+  _chartData.intraday=history;
+  _chartData.daily=buildDailyFromHistory(history);
+  drawChart(_chartData[_chartMode],_chartMode);
+}
+
+function drawChart(data,mode){
   const canvas=document.getElementById("chart");
+  const tooltip=document.getElementById("chart-tooltip");
   const ctx=canvas.getContext("2d");
   const dpr=window.devicePixelRatio||1;
+  const PAD_LEFT=8,PAD_RIGHT=60,PAD_TOP=10,PAD_BOTTOM=28;
   const rect=canvas.parentElement.getBoundingClientRect();
-  const W=rect.width-36;const H=200;
-  canvas.width=(W+36)*dpr;canvas.height=(H+24)*dpr;
-  canvas.style.width=(W+36)+"px";canvas.style.height=(H+24)+"px";
-  ctx.scale(dpr,dpr);ctx.translate(18,0);
+  const CW=rect.width;const CH=220;
+  canvas.width=CW*dpr;canvas.height=CH*dpr;
+  canvas.style.width=CW+"px";canvas.style.height=CH+"px";
+  ctx.scale(dpr,dpr);
 
-  if(daily.length<2){ctx.fillStyle="var(--text-dim)";ctx.font="12px 'JetBrains Mono'";ctx.fillText("Chờ thêm dữ liệu...",W/2-60,H/2);return;}
+  const W=CW-PAD_LEFT-PAD_RIGHT;
+  const H=CH-PAD_TOP-PAD_BOTTOM;
 
-  const prices=daily.map(d=>d.price);
-  const mn=Math.min(...prices)-100,mx=Math.max(...prices)+100,rng=mx-mn;
-  const toX=i=>(i/(daily.length-1))*W;
-  const toY=p=>H-((p-mn)/rng)*H;
+  if(!data||data.length<2){
+    ctx.fillStyle="#8a8070";ctx.font="12px 'JetBrains Mono'";ctx.textAlign="center";
+    ctx.fillText("Chờ thêm dữ liệu...",CW/2,CH/2);return;
+  }
 
-  // Level lines
-  [{v:5000,c:"#10b981",l:"$5,000"},{v:4550,c:"#f59e0b",l:"$4,550"},{v:4360,c:"#f97316",l:"$4,360"},{v:4200,c:"#ef4444",l:"200-EMA"}]
-  .forEach(lv=>{
-    const y=toY(lv.v);if(y<0||y>H)return;
-    ctx.strokeStyle=lv.c;ctx.globalAlpha=0.3;ctx.setLineDash([6,4]);ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
-    ctx.setLineDash([]);ctx.globalAlpha=0.7;
-    ctx.fillStyle=lv.c;ctx.font="10px 'JetBrains Mono'";ctx.textAlign="right";
-    ctx.fillText(lv.l,W-2,y-4);ctx.globalAlpha=1;
+  const prices=data.map(d=>d.price);
+  const mn=Math.min(...prices),mx=Math.max(...prices);
+  const pad=(mx-mn)*0.1||50;
+  const yMin=mn-pad,yMax=mx+pad,yRng=yMax-yMin;
+  const toX=i=>PAD_LEFT+(i/(data.length-1))*W;
+  const toY=p=>PAD_TOP+H-((p-yMin)/yRng)*H;
+
+  // Grid lines
+  const levels=[{v:5000,c:"#10b981",l:"$5,000"},{v:4550,c:"#f59e0b",l:"$4,550"},{v:4360,c:"#f97316",l:"$4,360"},{v:4200,c:"#ef4444",l:"$4,200"}];
+  levels.forEach(lv=>{
+    const y=toY(lv.v);if(y<PAD_TOP||y>PAD_TOP+H)return;
+    ctx.save();ctx.strokeStyle=lv.c;ctx.globalAlpha=0.25;ctx.setLineDash([5,4]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(PAD_LEFT,y);ctx.lineTo(PAD_LEFT+W,y);ctx.stroke();
+    ctx.setLineDash([]);ctx.globalAlpha=0.8;
+    ctx.fillStyle=lv.c;ctx.font="9px 'JetBrains Mono'";ctx.textAlign="left";
+    ctx.fillText(lv.l,PAD_LEFT+W+4,y+3);ctx.restore();
   });
 
   // Area fill
+  ctx.save();
   ctx.beginPath();ctx.moveTo(toX(0),toY(prices[0]));
   for(let i=1;i<prices.length;i++)ctx.lineTo(toX(i),toY(prices[i]));
-  ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();
-  const grad=ctx.createLinearGradient(0,0,0,H);
-  grad.addColorStop(0,"rgba(212,160,23,0.25)");grad.addColorStop(1,"rgba(212,160,23,0.02)");
-  ctx.fillStyle=grad;ctx.fill();
+  ctx.lineTo(toX(prices.length-1),PAD_TOP+H);ctx.lineTo(toX(0),PAD_TOP+H);ctx.closePath();
+  const grad=ctx.createLinearGradient(0,PAD_TOP,0,PAD_TOP+H);
+  grad.addColorStop(0,"rgba(212,160,23,0.2)");grad.addColorStop(1,"rgba(212,160,23,0.01)");
+  ctx.fillStyle=grad;ctx.fill();ctx.restore();
 
   // Price line
+  ctx.save();
   ctx.beginPath();ctx.moveTo(toX(0),toY(prices[0]));
   for(let i=1;i<prices.length;i++)ctx.lineTo(toX(i),toY(prices[i]));
-  ctx.strokeStyle="#d4a017";ctx.lineWidth=2.5;ctx.lineJoin="round";ctx.lineCap="round";ctx.stroke();
+  ctx.strokeStyle="#d4a017";ctx.lineWidth=2;ctx.lineJoin="round";ctx.lineCap="round";ctx.stroke();
+  ctx.restore();
 
-  // Current dot with pulse
+  // Last dot
   const lx=toX(prices.length-1),ly=toY(prices[prices.length-1]);
-  ctx.beginPath();ctx.arc(lx,ly,7,0,Math.PI*2);ctx.fillStyle="rgba(212,160,23,0.2)";ctx.fill();
-  ctx.beginPath();ctx.arc(lx,ly,4,0,Math.PI*2);ctx.fillStyle="#d4a017";ctx.fill();
-  ctx.strokeStyle="#1a1714";ctx.lineWidth=2;ctx.stroke();
+  ctx.beginPath();ctx.arc(lx,ly,6,0,Math.PI*2);ctx.fillStyle="rgba(212,160,23,0.2)";ctx.fill();
+  ctx.beginPath();ctx.arc(lx,ly,3.5,0,Math.PI*2);ctx.fillStyle="#d4a017";ctx.fill();
 
-  // Price label at end
-  ctx.fillStyle="#d4a017";ctx.font="bold 11px 'JetBrains Mono'";ctx.textAlign="left";
-  ctx.fillText("$"+prices[prices.length-1].toLocaleString("en",{minimumFractionDigits:0}),lx+8,ly+4);
-
-  // Date/time labels
-  ctx.fillStyle="#8a8070";ctx.font="9px 'JetBrains Mono'";ctx.textAlign="center";
-  const step=Math.max(1,Math.floor(daily.length/6));
-  for(let i=0;i<daily.length;i+=step){
-    const r=daily[i];
-    const dt=r.timestamp?new Date(r.timestamp).toLocaleString("vi-VN",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).replace(", "," "):r.date.slice(5).replace("-","/");
-    ctx.fillText(dt,toX(i),H+14);
+  // X-axis labels — tính step để không overlap
+  const maxLabels=Math.floor(W/70);
+  const step=Math.max(1,Math.floor(data.length/maxLabels));
+  ctx.fillStyle="#6b6050";ctx.font="9px 'JetBrains Mono'";ctx.textAlign="center";
+  for(let i=0;i<data.length;i+=step){
+    const r=data[i];
+    let label;
+    if(mode==='daily'){
+      label=r.date.slice(5).replace("-","/");
+    } else {
+      const ts=new Date(r.timestamp);
+      const dd=String(ts.getDate()).padStart(2,'0');
+      const mm=String(ts.getMonth()+1).padStart(2,'0');
+      const hh=String(ts.getHours()).padStart(2,'0');
+      const mi=String(ts.getMinutes()).padStart(2,'0');
+      label=`${hh}:${mi} ${dd}/${mm}`;
+    }
+    const x=toX(i);
+    // Clamp label không bị tràn trái/phải
+    const tw=ctx.measureText(label).width;
+    const clampedX=Math.max(tw/2,Math.min(CW-tw/2-PAD_RIGHT,x));
+    ctx.fillText(label,clampedX,PAD_TOP+H+16);
   }
+
+  // Tooltip interaction
+  canvas._chartData=data;canvas._mode=mode;
+  canvas._toX=toX;canvas._toY=toY;canvas._PAD_LEFT=PAD_LEFT;canvas._W=W;
+
+  canvas.onmousemove=function(e){
+    const bnd=canvas.getBoundingClientRect();
+    const mx=(e.clientX-bnd.left);
+    const idx=Math.round((mx-PAD_LEFT)/W*(data.length-1));
+    if(idx<0||idx>=data.length){tooltip.style.display='none';return;}
+    const r=data[idx];
+    const ttx=toX(idx);const tty=toY(r.price);
+
+    // Draw crosshair
+    drawChart(data,mode);
+    ctx.save();ctx.strokeStyle='rgba(212,160,23,0.4)';ctx.setLineDash([3,3]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(ttx,PAD_TOP);ctx.lineTo(ttx,PAD_TOP+H);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(PAD_LEFT,tty);ctx.lineTo(PAD_LEFT+W,tty);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();ctx.arc(ttx,tty,4,0,Math.PI*2);ctx.fillStyle="#d4a017";ctx.fill();
+    ctx.restore();
+
+    // Tooltip content
+    let timeStr;
+    if(mode==='daily'){
+      timeStr=r.date;
+    } else {
+      const ts=new Date(r.timestamp);
+      timeStr=ts.toLocaleString("vi-VN",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+    }
+    document.getElementById('tt-time').textContent=timeStr;
+    document.getElementById('tt-price').textContent='$'+r.price.toLocaleString("en",{minimumFractionDigits:1,maximumFractionDigits:1});
+    const sjcTxt=r.sjc_buy&&r.sjc_buy>0?`SJC: ${r.sjc_buy}tr / ${r.sjc_sell}tr`:'';
+    document.getElementById('tt-sjc').textContent=sjcTxt;
+
+    // Position tooltip — tránh tràn sang phải
+    tooltip.style.display='block';
+    const tw=tooltip.offsetWidth;
+    let tx=e.clientX-bnd.left+14;
+    if(tx+tw>CW-4)tx=e.clientX-bnd.left-tw-14;
+    tooltip.style.left=tx+'px';
+    tooltip.style.top=Math.max(0,tty-20)+'px';
+  };
+  canvas.onmouseleave=function(){
+    tooltip.style.display='none';
+    drawChart(data,mode);
+  };
 }
 
 // ============================================================
