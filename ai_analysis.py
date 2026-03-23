@@ -36,9 +36,9 @@ Trả lời bằng tiếng Việt, ngắn gọn, mỗi tin 1-2 câu. Tối đa 5
     }
 
     models = [
-        "gemini-2.5-flash-preview-05-20",
-        "gemini-2.0-flash-lite",
-        "gemini-1.5-flash",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
+        "gemini-2.5-pro",
     ]
     for model in models:
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={GEMINI_API_KEY}"
