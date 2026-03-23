@@ -3,7 +3,7 @@ from gold_sentinel_bot import build_daily_report, send_telegram, send_fomc_remin
 
 def main():
     print("📤 Gửi báo cáo hàng ngày...")
-    msg = build_daily_report()
+    msg = build_daily_report(with_ai=True)
     success = send_telegram(msg)
     if success:
         print("✅ Báo cáo đã gửi!")

@@ -6,6 +6,7 @@ GOLD SENTINEL — Telegram Bot v3
 """
 import os, json, requests
 from datetime import datetime, timezone, timedelta
+from ai_analysis import get_ai_analysis
 
 VN_TZ = timezone(timedelta(hours=7))
 
@@ -174,7 +175,7 @@ def load_latest():
     except Exception as e:
         print(f"  load_latest error: {e}"); return None, None
 
-def build_daily_report():
+def build_daily_report(with_ai=False):
     gold, sjc = load_latest()
     if not gold:
         # Fallback: fetch live nếu không đọc được file
@@ -215,9 +216,17 @@ def build_daily_report():
 ━━━━━━━━━━━━━━━━━━━━
 {a['emoji']} <b>GỢI Ý:</b> {a['action']}
 
-📈 JPM ($6,300) <b>{a['upside_jpm']:+.1f}%</b> | GS ($5,400) <b>{a['upside_gs']:+.1f}%</b>
-━━━━━━━━━━━━━━━━━━━━
-<i>⚠️ Không phải tư vấn tài chính.</i>"""
+📈 JPM ($6,300) <b>{a['upside_jpm']:+.1f}%</b> | GS ($5,400) <b>{a['upside_gs']:+.1f}%</b>"""
+    if with_ai:
+        print("🤖 Đang lấy phân tích AI...")
+        ai_block = get_ai_analysis(gold, sjc, a["action"])
+        if ai_block:
+            msg += ai_block
+        else:
+            msg += "\n━━━━━━━━━━━━━━━━━━━━"
+    else:
+        msg += "\n━━━━━━━━━━━━━━━━━━━━"
+    msg += "\n<i>⚠️ Không phải tư vấn tài chính.</i>"
     return msg
 
 def send_fomc_reminder():
