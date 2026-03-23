@@ -42,17 +42,23 @@ jobs:
       - name: Check if should send Telegram
         id: tg
         run: |
+          HM=$(date -u +'%H:%M')
           H=$(date -u +'%H')
+          M=$(date -u +'%M')
           MANUAL="${{ github.event.inputs.send_telegram }}"
-          echo "Current UTC hour: $H"
+          echo "Current UTC time: $HM"
           echo "Manual trigger: $MANUAL"
-          # 01 UTC = 8h sáng VN, 13 UTC = 8h tối VN
-          if [ "$H" = "01" ] || [ "$H" = "13" ] || [ "$MANUAL" = "true" ]; then
+          # 01:00 UTC = 8h sáng VN, 13:00 UTC = 8h tối VN
+          # Chỉ gửi đúng giờ :00 (M < 10 để tránh gửi lúc :05/:15 do cron delay)
+          if ([ "$H" = "01" ] || [ "$H" = "13" ]) && [ "$M" -lt 10 ]; then
             echo "send=true" >> $GITHUB_OUTPUT
-            echo ">>> Will send Telegram"
+            echo ">>> Will send Telegram at $HM"
+          elif [ "$MANUAL" = "true" ]; then
+            echo "send=true" >> $GITHUB_OUTPUT
+            echo ">>> Manual trigger: Will send Telegram"
           else
             echo "send=false" >> $GITHUB_OUTPUT
-            echo ">>> Skip Telegram (not 01 or 13 UTC)"
+            echo ">>> Skip Telegram (not 01:00 or 13:00 UTC)"
           fi
 
       - name: Send Telegram report
