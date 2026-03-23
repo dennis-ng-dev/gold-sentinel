@@ -41,6 +41,8 @@ jobs:
 
       - name: Check if should send Telegram
         id: tg
+        env:
+          TELEGRAM_PAUSED: ${{ vars.TELEGRAM_PAUSED }}
         run: |
           HM=$(date -u +'%H:%M')
           H=$(date -u +'%H')
@@ -48,9 +50,14 @@ jobs:
           MANUAL="${{ github.event.inputs.send_telegram }}"
           echo "Current UTC time: $HM"
           echo "Manual trigger: $MANUAL"
+          PAUSED="$TELEGRAM_PAUSED"
+          echo "Telegram paused: $PAUSED"
           # 01:00 UTC = 8h sáng VN, 13:00 UTC = 8h tối VN
           # Chỉ gửi đúng giờ :00 (M < 10 để tránh gửi lúc :05/:15 do cron delay)
-          if ([ "$H" = "01" ] || [ "$H" = "13" ]) && [ "$M" -lt 10 ]; then
+          if [ "$PAUSED" = "true" ] && [ "$MANUAL" != "true" ]; then
+            echo "send=false" >> $GITHUB_OUTPUT
+            echo ">>> Telegram paused (TELEGRAM_PAUSED=true)"
+          elif ([ "$H" = "01" ] || [ "$H" = "13" ]) && [ "$M" -lt 10 ]; then
             echo "send=true" >> $GITHUB_OUTPUT
             echo ">>> Will send Telegram at $HM"
           elif [ "$MANUAL" = "true" ]; then
