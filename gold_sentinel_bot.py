@@ -94,16 +94,31 @@ def get_sjc(world_price=0):
 def analyze(gold):
     p = gold["price"]; cpct = gold.get("change_pct",0)
     alerts = []; act = ""; emoji = ""
-    if p <= PRICE_LEVELS["bear_line_200ema"]:
-        act="CHỜ — Dưới 200-EMA, rủi ro bear market"; emoji="🔴"; alerts.append("⚠️ DƯỚI 200-EMA ($4,200)!")
-    elif p <= PRICE_LEVELS["support_4360"]:
-        act="QUAN SÁT — Vùng hỗ trợ mạnh, chờ đảo chiều"; emoji="🟠"; alerts.append("🟡 Hỗ trợ $4,360")
-    elif p <= PRICE_LEVELS["support_4550"]:
-        act="CÂN NHẮC — Mua DCA đợt 1 (20-30% vốn)"; emoji="🟡"; alerts.append("🟡 Hỗ trợ $4,550 bị test")
-    elif p < PRICE_LEVELS["resistance_5000"]:
-        act="MUA DCA — Chia nhỏ nhiều đợt"; emoji="🔵"; alerts.append("📊 Dưới $5,000 — Tích lũy")
+    L = PRICE_LEVELS
+    if p <= L["bear_line_200ema"]:
+        act="CHỜ — Dưới 200-EMA ($4,200), rủi ro bear market"; emoji="🔴"
+        alerts.append(f"⚠️ THỦNG 200-EMA — Giá ${p:,.0f} dưới $4,200!")
+    elif p <= L["support_4360"]:
+        act="QUAN SÁT — Đã thủng $4,360, chờ tín hiệu phục hồi"; emoji="🟠"
+        alerts.append(f"🟠 Đã thủng hỗ trợ $4,360 — Giá ${p:,.0f}, vùng nguy hiểm")
+        if p > L["bear_line_200ema"] + 50:
+            alerts.append(f"⚠️ Tiếp theo: 200-EMA $4,200 — cần giữ vững")
+    elif p <= L["support_4550"]:
+        act="CÂN NHẮC — Đã thủng $4,550, đang trong vùng $4,360–$4,550"; emoji="🟡"
+        alerts.append(f"🟡 Đã thủng hỗ trợ $4,550 — Giá ${p:,.0f}")
+        dist = p - L["support_4360"]
+        if dist < 50:
+            alerts.append(f"⚠️ Sắp test $4,360 — còn cách ${dist:.0f}")
+    elif p < L["resistance_5000"]:
+        act="MUA DCA — Dưới $5,000, vùng tích lũy"; emoji="🔵"
+        dist = L["support_4550"] - p
+        if dist > 0:
+            alerts.append(f"📊 Dưới $5,000 — Hỗ trợ $4,550 phía dưới ${dist:.0f}")
+        else:
+            alerts.append(f"📊 Dưới $5,000 — Vùng tích lũy, đang test $4,550")
     else:
-        act="GIỮ — Uptrend xác nhận"; emoji="🟢"; alerts.append("✅ Trên $5,000")
+        act="GIỮ — Uptrend xác nhận, trên $5,000"; emoji="🟢"
+        alerts.append(f"✅ Trên $5,000 — Xu hướng tăng")
     if abs(cpct) > ALERT_THRESHOLD_PCT:
         alerts.append(f"🔥 BẤT THƯỜNG: {'tăng' if cpct>0 else 'giảm'} {abs(cpct):.1f}%!")
     today = datetime.now(VN_TZ); nf = None; dtf = None

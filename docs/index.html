@@ -446,11 +446,26 @@ document.querySelectorAll("nav button").forEach(btn=>{
 // ============================================================
 function analyze(p,cpct){
   let act,emoji,color,alerts=[];
-  if(p<=LV.bear){act="CHỜ — Dưới 200-EMA, rủi ro bear market";emoji="🔴";color="var(--red)";alerts.push({t:"danger",m:"⚠️ DƯỚI 200-EMA ($4,200) — Ranh giới Bear Market!"});}
-  else if(p<=LV.s2){act="QUAN SÁT — Vùng hỗ trợ mạnh, chờ tín hiệu đảo chiều";emoji="🟠";color="var(--orange)";alerts.push({t:"warning",m:"🟡 Vùng hỗ trợ mạnh $4,360 — Có thể là đáy"});}
-  else if(p<=LV.s1){act="CÂN NHẮC — Có thể mua DCA đợt 1 (20-30% vốn)";emoji="🟡";color="var(--yellow)";alerts.push({t:"warning",m:"🟡 Vùng hỗ trợ $4,550 đang bị test"});}
-  else if(p<LV.r){act="MUA DCA — Chia nhỏ nhiều đợt, tích lũy dần";emoji="🔵";color="var(--blue)";alerts.push({t:"info",m:"📊 Dưới $5,000 — Vùng tích lũy"});}
-  else{act="GIỮ — Uptrend xác nhận, không bán vội";emoji="🟢";color="var(--green)";alerts.push({t:"success",m:"✅ Trên $5,000 — Xu hướng tăng"});}
+  const fmt=v=>"$"+v.toLocaleString("en",{maximumFractionDigits:0});
+  if(p<=LV.bear){
+    act="CHỜ — Dưới 200-EMA ($4,200), rủi ro bear market";emoji="🔴";color="var(--red)";
+    alerts.push({t:"danger",m:`⚠️ THỦNG 200-EMA — Giá ${fmt(p)} dưới $4,200!`});
+  } else if(p<=LV.s2){
+    act="QUAN SÁT — Đã thủng $4,360, chờ tín hiệu phục hồi";emoji="🟠";color="var(--orange)";
+    alerts.push({t:"danger",m:`🟠 Đã thủng hỗ trợ $4,360 — Giá ${fmt(p)}, vùng nguy hiểm`});
+    if(p>LV.bear+50) alerts.push({t:"warning",m:"⚠️ Tiếp theo: 200-EMA $4,200 — cần giữ vững"});
+  } else if(p<=LV.s1){
+    act="CÂN NHẮC — Đã thủng $4,550, đang trong vùng $4,360–$4,550";emoji="🟡";color="var(--yellow)";
+    alerts.push({t:"warning",m:`🟡 Đã thủng hỗ trợ $4,550 — Giá ${fmt(p)}`});
+    const dist=p-LV.s2;
+    if(dist<50) alerts.push({t:"danger",m:`⚠️ Sắp test $4,360 — còn cách $${dist.toFixed(0)}`});
+  } else if(p<LV.r){
+    act="MUA DCA — Dưới $5,000, vùng tích lũy";emoji="🔵";color="var(--blue)";
+    alerts.push({t:"info",m:`📊 Dưới $5,000 — Hỗ trợ gần nhất $4,550`});
+  } else{
+    act="GIỮ — Uptrend xác nhận, không bán vội";emoji="🟢";color="var(--green)";
+    alerts.push({t:"success",m:"✅ Trên $5,000 — Xu hướng tăng"});
+  }
   if(Math.abs(cpct||0)>2){
     const dir=cpct>0?"tăng":"giảm";
     alerts.push({t:"danger",m:`🔥 Biến động BẤT THƯỜNG: ${dir} ${Math.abs(cpct).toFixed(1)}% trong 24h!`});
