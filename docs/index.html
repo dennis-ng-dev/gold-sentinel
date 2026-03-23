@@ -261,7 +261,7 @@ footer p{font-size:10px;color:var(--text-darker);letter-spacing:2px;font-family:
     </div>
 
     <div class="card">
-      <div class="card-label">Biểu đồ giá · Daily</div>
+      <div class="card-label">Biểu đồ giá · Intraday (15 phút)</div>
       <canvas id="chart"></canvas>
     </div>
 
@@ -494,7 +494,7 @@ function render(d){
   document.getElementById("m-src").textContent=(l.source||"").split(".")[0]||"--";
 
   // Chart
-  drawChart(d.daily||[]);
+  drawChart(d.history||[]);
 
   // FOMC Timeline
   renderFOMC(a);
@@ -659,11 +659,12 @@ function drawChart(daily){
   ctx.fillStyle="#d4a017";ctx.font="bold 11px 'JetBrains Mono'";ctx.textAlign="left";
   ctx.fillText("$"+prices[prices.length-1].toLocaleString("en",{minimumFractionDigits:0}),lx+8,ly+4);
 
-  // Date labels
+  // Date/time labels
   ctx.fillStyle="#8a8070";ctx.font="9px 'JetBrains Mono'";ctx.textAlign="center";
   const step=Math.max(1,Math.floor(daily.length/6));
   for(let i=0;i<daily.length;i+=step){
-    const dt=daily[i].date.slice(5).replace("-","/");
+    const r=daily[i];
+    const dt=r.timestamp?new Date(r.timestamp).toLocaleString("vi-VN",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).replace(", "," "):r.date.slice(5).replace("-","/");
     ctx.fillText(dt,toX(i),H+14);
   }
 }

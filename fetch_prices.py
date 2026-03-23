@@ -124,10 +124,7 @@ def main():
 
     data["latest"] = rec
     hist = data.get("history", [])
-    dup = False
-    for h in hist:
-        if h.get("date") == rec["date"] and h.get("hour") == rec["hour"]: h.update(rec); dup = True; break
-    if not dup: hist.append(rec)
+    hist.append(rec)
     cutoff = (now - timedelta(days=MAX_HISTORY_DAYS)).isoformat()
     hist = [h for h in hist if h["timestamp"] >= cutoff]
     daily = {}
