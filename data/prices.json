@@ -1688,25 +1688,43 @@
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
       "sjc_updated": "14:17 24/03/2026"
+    },
+    {
+      "timestamp": "2026-03-25T08:30:00+07:00",
+      "slot": "2026-03-25T08:30",
+      "date": "2026-03-25",
+      "hour": 8,
+      "minute": 30,
+      "price": 4576.700195,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 171.7,
+      "sjc_sell": 174.7,
+      "sjc_source": "sjc.com.vn",
+      "sjc_real": true,
+      "sjc_updated": "08:29 25/03/2026"
     }
   ],
   "latest": {
-    "timestamp": "2026-03-25T08:00:00+07:00",
-    "slot": "2026-03-25T08:00",
+    "timestamp": "2026-03-25T08:30:00+07:00",
+    "slot": "2026-03-25T08:30",
     "date": "2026-03-25",
     "hour": 8,
-    "minute": 0,
-    "price": 4571.700195,
+    "minute": 30,
+    "price": 4576.700195,
     "change": 0,
     "change_pct": 0,
     "high": 0,
     "low": 0,
     "source": "gold-api.com",
-    "sjc_buy": 167.2,
-    "sjc_sell": 170.2,
+    "sjc_buy": 171.7,
+    "sjc_sell": 174.7,
     "sjc_source": "sjc.com.vn",
     "sjc_real": true,
-    "sjc_updated": "14:17 24/03/2026"
+    "sjc_updated": "08:29 25/03/2026"
   },
   "daily": [
     {
@@ -1846,24 +1864,24 @@
       "sjc_updated": "14:17 24/03/2026"
     },
     {
-      "timestamp": "2026-03-25T08:00:00+07:00",
-      "slot": "2026-03-25T08:00",
+      "timestamp": "2026-03-25T08:30:00+07:00",
+      "slot": "2026-03-25T08:30",
       "date": "2026-03-25",
       "hour": 8,
-      "minute": 0,
-      "price": 4571.700195,
+      "minute": 30,
+      "price": 4576.700195,
       "change": 0,
       "change_pct": 0,
       "high": 0,
       "low": 0,
       "source": "gold-api.com",
-      "sjc_buy": 167.2,
-      "sjc_sell": 170.2,
+      "sjc_buy": 171.7,
+      "sjc_sell": 174.7,
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
-      "sjc_updated": "14:17 24/03/2026"
+      "sjc_updated": "08:29 25/03/2026"
     }
   ],
-  "updated_at": "2026-03-25T08:15:17.860629+07:00",
-  "total_records": 95
+  "updated_at": "2026-03-25T08:30:22.380782+07:00",
+  "total_records": 96
 }
