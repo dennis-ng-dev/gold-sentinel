@@ -3549,7 +3549,7 @@
       "date": "2026-03-27",
       "hour": 12,
       "minute": 0,
-      "price": 4447.200195,
+      "price": 4445.0,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -3568,7 +3568,7 @@
     "date": "2026-03-27",
     "hour": 12,
     "minute": 0,
-    "price": 4447.200195,
+    "price": 4445.0,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -3749,7 +3749,7 @@
       "date": "2026-03-27",
       "hour": 12,
       "minute": 0,
-      "price": 4447.200195,
+      "price": 4445.0,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -3762,6 +3762,6 @@
       "sjc_updated": "08:49 27/03/2026"
     }
   ],
-  "updated_at": "2026-03-27T12:00:24.221206+07:00",
+  "updated_at": "2026-03-27T12:15:18.624546+07:00",
   "total_records": 199
 }
