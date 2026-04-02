@@ -7887,17 +7887,17 @@
       "date": "2026-04-02",
       "hour": 13,
       "minute": 0,
-      "price": 4595.200195,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 172.5,
-      "sjc_sell": 176.0,
+      "price": 4583.53,
+      "change": -174.57,
+      "change_pct": -3.67,
+      "high": 4800.375,
+      "low": 4554.28,
+      "source": "goldapi.io",
+      "sjc_buy": 168.8,
+      "sjc_sell": 172.8,
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
-      "sjc_updated": "09:49 02/04/2026"
+      "sjc_updated": "13:09 02/04/2026"
     }
   ],
   "latest": {
@@ -7906,17 +7906,17 @@
     "date": "2026-04-02",
     "hour": 13,
     "minute": 0,
-    "price": 4595.200195,
-    "change": 0,
-    "change_pct": 0,
-    "high": 0,
-    "low": 0,
-    "source": "gold-api.com",
-    "sjc_buy": 172.5,
-    "sjc_sell": 176.0,
+    "price": 4583.53,
+    "change": -174.57,
+    "change_pct": -3.67,
+    "high": 4800.375,
+    "low": 4554.28,
+    "source": "goldapi.io",
+    "sjc_buy": 168.8,
+    "sjc_sell": 172.8,
     "sjc_source": "sjc.com.vn",
     "sjc_real": true,
-    "sjc_updated": "09:49 02/04/2026"
+    "sjc_updated": "13:09 02/04/2026"
   },
   "daily": [
     {
@@ -8105,19 +8105,19 @@
       "date": "2026-04-02",
       "hour": 13,
       "minute": 0,
-      "price": 4595.200195,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 172.5,
-      "sjc_sell": 176.0,
+      "price": 4583.53,
+      "change": -174.57,
+      "change_pct": -3.67,
+      "high": 4800.375,
+      "low": 4554.28,
+      "source": "goldapi.io",
+      "sjc_buy": 168.8,
+      "sjc_sell": 172.8,
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
-      "sjc_updated": "09:49 02/04/2026"
+      "sjc_updated": "13:09 02/04/2026"
     }
   ],
-  "updated_at": "2026-04-02T13:00:29.370161+07:00",
+  "updated_at": "2026-04-02T13:15:21.173194+07:00",
   "total_records": 440
 }
