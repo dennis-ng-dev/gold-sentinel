@@ -17150,25 +17150,43 @@
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
       "sjc_updated": "09:27 15/04/2026"
+    },
+    {
+      "timestamp": "2026-04-15T10:00:00+07:00",
+      "slot": "2026-04-15T10:00",
+      "date": "2026-04-15",
+      "hour": 10,
+      "minute": 0,
+      "price": 4825.0,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 171.5,
+      "sjc_sell": 174.5,
+      "sjc_source": "sjc.com.vn",
+      "sjc_real": true,
+      "sjc_updated": "09:52 15/04/2026"
     }
   ],
   "latest": {
-    "timestamp": "2026-04-15T09:30:00+07:00",
-    "slot": "2026-04-15T09:30",
+    "timestamp": "2026-04-15T10:00:00+07:00",
+    "slot": "2026-04-15T10:00",
     "date": "2026-04-15",
-    "hour": 9,
-    "minute": 30,
-    "price": 4828.0,
+    "hour": 10,
+    "minute": 0,
+    "price": 4825.0,
     "change": 0,
     "change_pct": 0,
     "high": 0,
     "low": 0,
     "source": "gold-api.com",
-    "sjc_buy": 172.0,
-    "sjc_sell": 175.0,
+    "sjc_buy": 171.5,
+    "sjc_sell": 174.5,
     "sjc_source": "sjc.com.vn",
     "sjc_real": true,
-    "sjc_updated": "09:27 15/04/2026"
+    "sjc_updated": "09:52 15/04/2026"
   },
   "daily": [
     {
@@ -17586,24 +17604,24 @@
       "sjc_updated": "09:00 14/04/2026"
     },
     {
-      "timestamp": "2026-04-15T09:30:00+07:00",
-      "slot": "2026-04-15T09:30",
+      "timestamp": "2026-04-15T10:00:00+07:00",
+      "slot": "2026-04-15T10:00",
       "date": "2026-04-15",
-      "hour": 9,
-      "minute": 30,
-      "price": 4828.0,
+      "hour": 10,
+      "minute": 0,
+      "price": 4825.0,
       "change": 0,
       "change_pct": 0,
       "high": 0,
       "low": 0,
       "source": "gold-api.com",
-      "sjc_buy": 172.0,
-      "sjc_sell": 175.0,
+      "sjc_buy": 171.5,
+      "sjc_sell": 174.5,
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
-      "sjc_updated": "09:27 15/04/2026"
+      "sjc_updated": "09:52 15/04/2026"
     }
   ],
-  "updated_at": "2026-04-15T09:45:23.512338+07:00",
-  "total_records": 954
+  "updated_at": "2026-04-15T10:00:30.609303+07:00",
+  "total_records": 955
 }
