@@ -17312,15 +17312,33 @@
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
       "sjc_updated": "13:09 15/04/2026"
+    },
+    {
+      "timestamp": "2026-04-15T14:30:00+07:00",
+      "slot": "2026-04-15T14:30",
+      "date": "2026-04-15",
+      "hour": 14,
+      "minute": 30,
+      "price": 4811.799805,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 170.5,
+      "sjc_sell": 174.0,
+      "sjc_source": "sjc.com.vn",
+      "sjc_real": true,
+      "sjc_updated": "13:09 15/04/2026"
     }
   ],
   "latest": {
-    "timestamp": "2026-04-15T14:00:00+07:00",
-    "slot": "2026-04-15T14:00",
+    "timestamp": "2026-04-15T14:30:00+07:00",
+    "slot": "2026-04-15T14:30",
     "date": "2026-04-15",
     "hour": 14,
-    "minute": 0,
-    "price": 4816.0,
+    "minute": 30,
+    "price": 4811.799805,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -17748,12 +17766,12 @@
       "sjc_updated": "09:00 14/04/2026"
     },
     {
-      "timestamp": "2026-04-15T14:00:00+07:00",
-      "slot": "2026-04-15T14:00",
+      "timestamp": "2026-04-15T14:30:00+07:00",
+      "slot": "2026-04-15T14:30",
       "date": "2026-04-15",
       "hour": 14,
-      "minute": 0,
-      "price": 4816.0,
+      "minute": 30,
+      "price": 4811.799805,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -17766,6 +17784,6 @@
       "sjc_updated": "13:09 15/04/2026"
     }
   ],
-  "updated_at": "2026-04-15T14:15:24.568822+07:00",
-  "total_records": 963
+  "updated_at": "2026-04-15T14:30:27.890422+07:00",
+  "total_records": 964
 }
