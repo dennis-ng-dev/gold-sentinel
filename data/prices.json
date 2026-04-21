@@ -21387,7 +21387,7 @@
       "date": "2026-04-21",
       "hour": 10,
       "minute": 0,
-      "price": 4809.100098,
+      "price": 4802.899902,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -21397,7 +21397,7 @@
       "sjc_sell": 171.5,
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
-      "sjc_updated": "08:32 21/04/2026"
+      "sjc_updated": "10:09 21/04/2026"
     }
   ],
   "latest": {
@@ -21406,7 +21406,7 @@
     "date": "2026-04-21",
     "hour": 10,
     "minute": 0,
-    "price": 4809.100098,
+    "price": 4802.899902,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -21416,7 +21416,7 @@
     "sjc_sell": 171.5,
     "sjc_source": "sjc.com.vn",
     "sjc_real": true,
-    "sjc_updated": "08:32 21/04/2026"
+    "sjc_updated": "10:09 21/04/2026"
   },
   "daily": [
     {
@@ -21947,7 +21947,7 @@
       "date": "2026-04-21",
       "hour": 10,
       "minute": 0,
-      "price": 4809.100098,
+      "price": 4802.899902,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -21957,9 +21957,9 @@
       "sjc_sell": 171.5,
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
-      "sjc_updated": "08:32 21/04/2026"
+      "sjc_updated": "10:09 21/04/2026"
     }
   ],
-  "updated_at": "2026-04-21T10:00:28.207359+07:00",
+  "updated_at": "2026-04-21T10:15:19.370437+07:00",
   "total_records": 1190
 }
