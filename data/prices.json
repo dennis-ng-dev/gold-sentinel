@@ -23061,17 +23061,17 @@
       "date": "2026-04-23",
       "hour": 8,
       "minute": 30,
-      "price": 4726.66,
-      "change": -12.56,
-      "change_pct": -0.26,
-      "high": 4753.79,
-      "low": 4694.355,
-      "source": "goldapi.io",
-      "sjc_buy": 167.5,
-      "sjc_sell": 170.0,
+      "price": 4735.299805,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 166.7,
+      "sjc_sell": 169.2,
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
-      "sjc_updated": "10:44 22/04/2026"
+      "sjc_updated": "08:36 23/04/2026"
     }
   ],
   "latest": {
@@ -23080,17 +23080,17 @@
     "date": "2026-04-23",
     "hour": 8,
     "minute": 30,
-    "price": 4726.66,
-    "change": -12.56,
-    "change_pct": -0.26,
-    "high": 4753.79,
-    "low": 4694.355,
-    "source": "goldapi.io",
-    "sjc_buy": 167.5,
-    "sjc_sell": 170.0,
+    "price": 4735.299805,
+    "change": 0,
+    "change_pct": 0,
+    "high": 0,
+    "low": 0,
+    "source": "gold-api.com",
+    "sjc_buy": 166.7,
+    "sjc_sell": 169.2,
     "sjc_source": "sjc.com.vn",
     "sjc_real": true,
-    "sjc_updated": "10:44 22/04/2026"
+    "sjc_updated": "08:36 23/04/2026"
   },
   "daily": [
     {
@@ -23657,19 +23657,19 @@
       "date": "2026-04-23",
       "hour": 8,
       "minute": 30,
-      "price": 4726.66,
-      "change": -12.56,
-      "change_pct": -0.26,
-      "high": 4753.79,
-      "low": 4694.355,
-      "source": "goldapi.io",
-      "sjc_buy": 167.5,
-      "sjc_sell": 170.0,
+      "price": 4735.299805,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 166.7,
+      "sjc_sell": 169.2,
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
-      "sjc_updated": "10:44 22/04/2026"
+      "sjc_updated": "08:36 23/04/2026"
     }
   ],
-  "updated_at": "2026-04-23T08:30:29.018142+07:00",
+  "updated_at": "2026-04-23T08:45:22.669073+07:00",
   "total_records": 1283
 }
