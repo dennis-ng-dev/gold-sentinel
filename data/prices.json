@@ -23864,25 +23864,43 @@
       "sjc_source": "sjc.com.vn",
       "sjc_real": true,
       "sjc_updated": "08:36 23/04/2026"
+    },
+    {
+      "timestamp": "2026-04-24T07:30:00+07:00",
+      "slot": "2026-04-24T07:30",
+      "date": "2026-04-24",
+      "hour": 7,
+      "minute": 30,
+      "price": 4706.100098,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 174.4,
+      "sjc_sell": 177.4,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-04-24T07:00:00+07:00",
-    "slot": "2026-04-24T07:00",
+    "timestamp": "2026-04-24T07:30:00+07:00",
+    "slot": "2026-04-24T07:30",
     "date": "2026-04-24",
     "hour": 7,
-    "minute": 0,
-    "price": 4697.700195,
+    "minute": 30,
+    "price": 4706.100098,
     "change": 0,
     "change_pct": 0,
     "high": 0,
     "low": 0,
     "source": "gold-api.com",
-    "sjc_buy": 166.7,
-    "sjc_sell": 169.2,
-    "sjc_source": "sjc.com.vn",
-    "sjc_real": true,
-    "sjc_updated": "08:36 23/04/2026"
+    "sjc_buy": 174.4,
+    "sjc_sell": 177.4,
+    "sjc_source": "estimated",
+    "sjc_real": false,
+    "sjc_updated": ""
   },
   "daily": [
     {
@@ -24462,24 +24480,24 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-04-24T07:00:00+07:00",
-      "slot": "2026-04-24T07:00",
+      "timestamp": "2026-04-24T07:30:00+07:00",
+      "slot": "2026-04-24T07:30",
       "date": "2026-04-24",
       "hour": 7,
-      "minute": 0,
-      "price": 4697.700195,
+      "minute": 30,
+      "price": 4706.100098,
       "change": 0,
       "change_pct": 0,
       "high": 0,
       "low": 0,
       "source": "gold-api.com",
-      "sjc_buy": 166.7,
-      "sjc_sell": 169.2,
-      "sjc_source": "sjc.com.vn",
-      "sjc_real": true,
-      "sjc_updated": "08:36 23/04/2026"
+      "sjc_buy": 174.4,
+      "sjc_sell": 177.4,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-04-24T07:15:21.501308+07:00",
-  "total_records": 1327
+  "updated_at": "2026-04-24T07:30:25.362277+07:00",
+  "total_records": 1328
 }
