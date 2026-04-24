@@ -24116,25 +24116,43 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-04-24T14:30:00+07:00",
+      "slot": "2026-04-24T14:30",
+      "date": "2026-04-24",
+      "hour": 14,
+      "minute": 30,
+      "price": 4685.399902,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 166.2,
+      "sjc_sell": 168.7,
+      "sjc_source": "sjc.com.vn",
+      "sjc_real": true,
+      "sjc_updated": "10:53 24/04/2026"
     }
   ],
   "latest": {
-    "timestamp": "2026-04-24T14:00:00+07:00",
-    "slot": "2026-04-24T14:00",
+    "timestamp": "2026-04-24T14:30:00+07:00",
+    "slot": "2026-04-24T14:30",
     "date": "2026-04-24",
     "hour": 14,
-    "minute": 0,
-    "price": 4681.799805,
+    "minute": 30,
+    "price": 4685.399902,
     "change": 0,
     "change_pct": 0,
     "high": 0,
     "low": 0,
     "source": "gold-api.com",
-    "sjc_buy": 173.7,
-    "sjc_sell": 176.7,
-    "sjc_source": "estimated",
-    "sjc_real": false,
-    "sjc_updated": ""
+    "sjc_buy": 166.2,
+    "sjc_sell": 168.7,
+    "sjc_source": "sjc.com.vn",
+    "sjc_real": true,
+    "sjc_updated": "10:53 24/04/2026"
   },
   "daily": [
     {
@@ -24714,24 +24732,24 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-04-24T14:00:00+07:00",
-      "slot": "2026-04-24T14:00",
+      "timestamp": "2026-04-24T14:30:00+07:00",
+      "slot": "2026-04-24T14:30",
       "date": "2026-04-24",
       "hour": 14,
-      "minute": 0,
-      "price": 4681.799805,
+      "minute": 30,
+      "price": 4685.399902,
       "change": 0,
       "change_pct": 0,
       "high": 0,
       "low": 0,
       "source": "gold-api.com",
-      "sjc_buy": 173.7,
-      "sjc_sell": 176.7,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
+      "sjc_buy": 166.2,
+      "sjc_sell": 168.7,
+      "sjc_source": "sjc.com.vn",
+      "sjc_real": true,
+      "sjc_updated": "10:53 24/04/2026"
     }
   ],
-  "updated_at": "2026-04-24T14:15:25.044195+07:00",
-  "total_records": 1341
+  "updated_at": "2026-04-24T14:30:37.750640+07:00",
+  "total_records": 1342
 }
