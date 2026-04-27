@@ -25671,17 +25671,17 @@
       "date": "2026-04-27",
       "hour": 11,
       "minute": 30,
-      "price": 4728.415,
-      "change": 19.16,
-      "change_pct": 0.41,
-      "high": 4729.505,
+      "price": 4726.68,
+      "change": 17.43,
+      "change_pct": 0.37,
+      "high": 4730.125,
       "low": 4672.255,
       "source": "goldapi.io",
-      "sjc_buy": 166.3,
-      "sjc_sell": 168.8,
-      "sjc_source": "sjc.com.vn",
-      "sjc_real": true,
-      "sjc_updated": "08:54 25/04/2026"
+      "sjc_buy": 175.1,
+      "sjc_sell": 178.1,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
@@ -25690,17 +25690,17 @@
     "date": "2026-04-27",
     "hour": 11,
     "minute": 30,
-    "price": 4728.415,
-    "change": 19.16,
-    "change_pct": 0.41,
-    "high": 4729.505,
+    "price": 4726.68,
+    "change": 17.43,
+    "change_pct": 0.37,
+    "high": 4730.125,
     "low": 4672.255,
     "source": "goldapi.io",
-    "sjc_buy": 166.3,
-    "sjc_sell": 168.8,
-    "sjc_source": "sjc.com.vn",
-    "sjc_real": true,
-    "sjc_updated": "08:54 25/04/2026"
+    "sjc_buy": 175.1,
+    "sjc_sell": 178.1,
+    "sjc_source": "estimated",
+    "sjc_real": false,
+    "sjc_updated": ""
   },
   "daily": [
     {
@@ -26339,19 +26339,19 @@
       "date": "2026-04-27",
       "hour": 11,
       "minute": 30,
-      "price": 4728.415,
-      "change": 19.16,
-      "change_pct": 0.41,
-      "high": 4729.505,
+      "price": 4726.68,
+      "change": 17.43,
+      "change_pct": 0.37,
+      "high": 4730.125,
       "low": 4672.255,
       "source": "goldapi.io",
-      "sjc_buy": 166.3,
-      "sjc_sell": 168.8,
-      "sjc_source": "sjc.com.vn",
-      "sjc_real": true,
-      "sjc_updated": "08:54 25/04/2026"
+      "sjc_buy": 175.1,
+      "sjc_sell": 178.1,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-04-27T11:30:30.210041+07:00",
+  "updated_at": "2026-04-27T11:45:24.174896+07:00",
   "total_records": 1428
 }
