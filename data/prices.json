@@ -52862,15 +52862,33 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-06-04T03:30:00+07:00",
+      "slot": "2026-06-04T03:30",
+      "date": "2026-06-04",
+      "hour": 3,
+      "minute": 30,
+      "price": 4440.399902,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 166.0,
+      "sjc_sell": 169.0,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-06-04T03:00:00+07:00",
-    "slot": "2026-06-04T03:00",
+    "timestamp": "2026-06-04T03:30:00+07:00",
+    "slot": "2026-06-04T03:30",
     "date": "2026-06-04",
     "hour": 3,
-    "minute": 0,
-    "price": 4440.799805,
+    "minute": 30,
+    "price": 4440.399902,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -54198,12 +54216,12 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-06-04T03:00:00+07:00",
-      "slot": "2026-06-04T03:00",
+      "timestamp": "2026-06-04T03:30:00+07:00",
+      "slot": "2026-06-04T03:30",
       "date": "2026-06-04",
       "hour": 3,
-      "minute": 0,
-      "price": 4440.799805,
+      "minute": 30,
+      "price": 4440.399902,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -54216,6 +54234,6 @@
       "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-06-04T03:15:25.491280+07:00",
-  "total_records": 2938
+  "updated_at": "2026-06-04T03:30:34.593288+07:00",
+  "total_records": 2939
 }
