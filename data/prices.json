@@ -1,42 +1,6 @@
 {
   "history": [
     {
-      "timestamp": "2026-05-14T22:00:00+07:00",
-      "slot": "2026-05-14T22:00",
-      "date": "2026-05-14",
-      "hour": 22,
-      "minute": 0,
-      "price": 4684.745,
-      "change": -4.55,
-      "change_pct": -0.1,
-      "high": 4718.765,
-      "low": 4666.62,
-      "source": "goldapi.io",
-      "sjc_buy": 173.8,
-      "sjc_sell": 176.8,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
-      "timestamp": "2026-05-14T22:30:00+07:00",
-      "slot": "2026-05-14T22:30",
-      "date": "2026-05-14",
-      "hour": 22,
-      "minute": 30,
-      "price": 4683.200195,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 173.7,
-      "sjc_sell": 176.7,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
       "timestamp": "2026-05-14T23:00:00+07:00",
       "slot": "2026-05-14T23:00",
       "date": "2026-05-14",
@@ -27917,15 +27881,33 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-08-12T22:30:00+07:00",
+      "slot": "2026-08-12T22:30",
+      "date": "2026-08-12",
+      "hour": 22,
+      "minute": 30,
+      "price": 4420.899902,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 165.4,
+      "sjc_sell": 168.4,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-08-12T21:30:00+07:00",
-    "slot": "2026-08-12T21:30",
+    "timestamp": "2026-08-12T22:30:00+07:00",
+    "slot": "2026-08-12T22:30",
     "date": "2026-08-12",
-    "hour": 21,
+    "hour": 22,
     "minute": 30,
-    "price": 4421.700195,
+    "price": 4420.899902,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -29559,12 +29541,12 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-08-12T21:30:00+07:00",
-      "slot": "2026-08-12T21:30",
+      "timestamp": "2026-08-12T22:30:00+07:00",
+      "slot": "2026-08-12T22:30",
       "date": "2026-08-12",
-      "hour": 21,
+      "hour": 22,
       "minute": 30,
-      "price": 4421.700195,
+      "price": 4420.899902,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -29577,6 +29559,6 @@
       "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-08-12T21:35:27.334708+07:00",
-  "total_records": 1551
+  "updated_at": "2026-08-12T22:38:22.560581+07:00",
+  "total_records": 1550
 }
