@@ -1,24 +1,6 @@
 {
   "history": [
     {
-      "timestamp": "2026-05-19T22:00:00+07:00",
-      "slot": "2026-05-19T22:00",
-      "date": "2026-05-19",
-      "hour": 22,
-      "minute": 0,
-      "price": 4498.5,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 167.9,
-      "sjc_sell": 170.9,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
       "timestamp": "2026-05-19T22:30:00+07:00",
       "slot": "2026-05-19T22:30",
       "date": "2026-05-19",
@@ -26297,15 +26279,33 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-08-17T22:00:00+07:00",
+      "slot": "2026-08-17T22:00",
+      "date": "2026-08-17",
+      "hour": 22,
+      "minute": 0,
+      "price": 4419.700195,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 165.4,
+      "sjc_sell": 168.4,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-08-17T21:30:00+07:00",
-    "slot": "2026-08-17T21:30",
+    "timestamp": "2026-08-17T22:00:00+07:00",
+    "slot": "2026-08-17T22:00",
     "date": "2026-08-17",
-    "hour": 21,
-    "minute": 30,
-    "price": 4420.899902,
+    "hour": 22,
+    "minute": 0,
+    "price": 4419.700195,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -27939,12 +27939,12 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-08-17T21:30:00+07:00",
-      "slot": "2026-08-17T21:30",
+      "timestamp": "2026-08-17T22:00:00+07:00",
+      "slot": "2026-08-17T22:00",
       "date": "2026-08-17",
-      "hour": 21,
-      "minute": 30,
-      "price": 4420.899902,
+      "hour": 22,
+      "minute": 0,
+      "price": 4419.700195,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -27957,6 +27957,6 @@
       "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-08-17T21:43:58.819002+07:00",
+  "updated_at": "2026-08-17T22:07:22.180615+07:00",
   "total_records": 1461
 }
