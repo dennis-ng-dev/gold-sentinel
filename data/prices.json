@@ -1,24 +1,6 @@
 {
   "history": [
     {
-      "timestamp": "2026-05-22T16:00:00+07:00",
-      "slot": "2026-05-22T16:00",
-      "date": "2026-05-22",
-      "hour": 16,
-      "minute": 0,
-      "price": 4520.700195,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 168.6,
-      "sjc_sell": 171.6,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
       "timestamp": "2026-05-22T16:30:00+07:00",
       "slot": "2026-05-22T16:30",
       "date": "2026-05-22",
@@ -25631,15 +25613,33 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-08-20T16:00:00+07:00",
+      "slot": "2026-08-20T16:00",
+      "date": "2026-08-20",
+      "hour": 16,
+      "minute": 0,
+      "price": 4493.899902,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 167.7,
+      "sjc_sell": 170.7,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-08-20T15:30:00+07:00",
-    "slot": "2026-08-20T15:30",
+    "timestamp": "2026-08-20T16:00:00+07:00",
+    "slot": "2026-08-20T16:00",
     "date": "2026-08-20",
-    "hour": 15,
-    "minute": 30,
-    "price": 4495.200195,
+    "hour": 16,
+    "minute": 0,
+    "price": 4493.899902,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -27273,12 +27273,12 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-08-20T15:30:00+07:00",
-      "slot": "2026-08-20T15:30",
+      "timestamp": "2026-08-20T16:00:00+07:00",
+      "slot": "2026-08-20T16:00",
       "date": "2026-08-20",
-      "hour": 15,
-      "minute": 30,
-      "price": 4495.200195,
+      "hour": 16,
+      "minute": 0,
+      "price": 4493.899902,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -27291,6 +27291,6 @@
       "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-08-20T15:36:42.835411+07:00",
+  "updated_at": "2026-08-20T16:16:28.626016+07:00",
   "total_records": 1424
 }
