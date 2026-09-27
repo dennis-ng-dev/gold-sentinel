@@ -1,24 +1,6 @@
 {
   "history": [
     {
-      "timestamp": "2026-06-29T10:30:00+07:00",
-      "slot": "2026-06-29T10:30",
-      "date": "2026-06-29",
-      "hour": 10,
-      "minute": 30,
-      "price": 4071.899902,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 154.3,
-      "sjc_sell": 157.3,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
       "timestamp": "2026-06-29T15:30:00+07:00",
       "slot": "2026-06-29T15:30",
       "date": "2026-06-29",
@@ -19223,14 +19205,32 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-09-27T14:30:00+07:00",
+      "slot": "2026-09-27T14:30",
+      "date": "2026-09-27",
+      "hour": 14,
+      "minute": 30,
+      "price": 4286.200195,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 161.1,
+      "sjc_sell": 164.1,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-09-27T07:00:00+07:00",
-    "slot": "2026-09-27T07:00",
+    "timestamp": "2026-09-27T14:30:00+07:00",
+    "slot": "2026-09-27T14:30",
     "date": "2026-09-27",
-    "hour": 7,
-    "minute": 0,
+    "hour": 14,
+    "minute": 30,
     "price": 4286.200195,
     "change": 0,
     "change_pct": 0,
@@ -20865,11 +20865,11 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-09-27T07:00:00+07:00",
-      "slot": "2026-09-27T07:00",
+      "timestamp": "2026-09-27T14:30:00+07:00",
+      "slot": "2026-09-27T14:30",
       "date": "2026-09-27",
-      "hour": 7,
-      "minute": 0,
+      "hour": 14,
+      "minute": 30,
       "price": 4286.200195,
       "change": 0,
       "change_pct": 0,
@@ -20883,6 +20883,6 @@
       "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-09-27T07:20:44.778155+07:00",
+  "updated_at": "2026-09-27T14:48:16.009335+07:00",
   "total_records": 1068
 }
