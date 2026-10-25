@@ -1,24 +1,6 @@
 {
   "history": [
     {
-      "timestamp": "2026-07-27T22:30:00+07:00",
-      "slot": "2026-07-27T22:30",
-      "date": "2026-07-27",
-      "hour": 22,
-      "minute": 30,
-      "price": 4079.600098,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 154.6,
-      "sjc_sell": 157.6,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
       "timestamp": "2026-07-28T00:30:00+07:00",
       "slot": "2026-07-28T00:30",
       "date": "2026-07-28",
@@ -16019,13 +16001,31 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-10-26T00:00:00+07:00",
+      "slot": "2026-10-26T00:00",
+      "date": "2026-10-26",
+      "hour": 0,
+      "minute": 0,
+      "price": 3996.899902,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 151.9,
+      "sjc_sell": 154.9,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-10-25T20:00:00+07:00",
-    "slot": "2026-10-25T20:00",
-    "date": "2026-10-25",
-    "hour": 20,
+    "timestamp": "2026-10-26T00:00:00+07:00",
+    "slot": "2026-10-26T00:00",
+    "date": "2026-10-26",
+    "hour": 0,
     "minute": 0,
     "price": 3996.899902,
     "change": 0,
@@ -16040,24 +16040,6 @@
     "sjc_updated": ""
   },
   "daily": [
-    {
-      "timestamp": "2026-07-27T22:30:00+07:00",
-      "slot": "2026-07-27T22:30",
-      "date": "2026-07-27",
-      "hour": 22,
-      "minute": 30,
-      "price": 4079.600098,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 154.6,
-      "sjc_sell": 157.6,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
     {
       "timestamp": "2026-07-28T22:30:00+07:00",
       "slot": "2026-07-28T22:30",
@@ -17677,8 +17659,26 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-10-26T00:00:00+07:00",
+      "slot": "2026-10-26T00:00",
+      "date": "2026-10-26",
+      "hour": 0,
+      "minute": 0,
+      "price": 3996.899902,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 151.9,
+      "sjc_sell": 154.9,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-10-25T20:02:35.256103+07:00",
+  "updated_at": "2026-10-26T00:29:16.008860+07:00",
   "total_records": 890
 }
