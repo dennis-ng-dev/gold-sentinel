@@ -1,60 +1,6 @@
 {
   "history": [
     {
-      "timestamp": "2026-07-31T16:30:00+07:00",
-      "slot": "2026-07-31T16:30",
-      "date": "2026-07-31",
-      "hour": 16,
-      "minute": 30,
-      "price": 4054.100098,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 153.7,
-      "sjc_sell": 156.7,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
-      "timestamp": "2026-07-31T18:30:00+07:00",
-      "slot": "2026-07-31T18:30",
-      "date": "2026-07-31",
-      "hour": 18,
-      "minute": 30,
-      "price": 4053.100098,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 153.7,
-      "sjc_sell": 156.7,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
-      "timestamp": "2026-07-31T21:00:00+07:00",
-      "slot": "2026-07-31T21:00",
-      "date": "2026-07-31",
-      "hour": 21,
-      "minute": 0,
-      "price": 4031.199951,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 153.0,
-      "sjc_sell": 156.0,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
       "timestamp": "2026-07-31T23:00:00+07:00",
       "slot": "2026-07-31T23:00",
       "date": "2026-07-31",
@@ -15515,15 +15461,33 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-10-29T21:30:00+07:00",
+      "slot": "2026-10-29T21:30",
+      "date": "2026-10-29",
+      "hour": 21,
+      "minute": 30,
+      "price": 4031.699951,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 153.0,
+      "sjc_sell": 156.0,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-10-29T14:30:00+07:00",
-    "slot": "2026-10-29T14:30",
+    "timestamp": "2026-10-29T21:30:00+07:00",
+    "slot": "2026-10-29T21:30",
     "date": "2026-10-29",
-    "hour": 14,
+    "hour": 21,
     "minute": 30,
-    "price": 4030.300049,
+    "price": 4031.699951,
     "change": 0,
     "change_pct": 0,
     "high": 0,
@@ -17157,12 +17121,12 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-10-29T14:30:00+07:00",
-      "slot": "2026-10-29T14:30",
+      "timestamp": "2026-10-29T21:30:00+07:00",
+      "slot": "2026-10-29T21:30",
       "date": "2026-10-29",
-      "hour": 14,
+      "hour": 21,
       "minute": 30,
-      "price": 4030.300049,
+      "price": 4031.699951,
       "change": 0,
       "change_pct": 0,
       "high": 0,
@@ -17175,6 +17139,6 @@
       "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-10-29T14:40:00.590511+07:00",
-  "total_records": 862
+  "updated_at": "2026-10-29T21:39:12.024279+07:00",
+  "total_records": 860
 }
