@@ -1,24 +1,6 @@
 {
   "history": [
     {
-      "timestamp": "2026-08-03T05:30:00+07:00",
-      "slot": "2026-08-03T05:30",
-      "date": "2026-08-03",
-      "hour": 5,
-      "minute": 30,
-      "price": 4066.5,
-      "change": 0,
-      "change_pct": 0,
-      "high": 0,
-      "low": 0,
-      "source": "gold-api.com",
-      "sjc_buy": 154.1,
-      "sjc_sell": 157.1,
-      "sjc_source": "estimated",
-      "sjc_real": false,
-      "sjc_updated": ""
-    },
-    {
       "timestamp": "2026-08-03T09:30:00+07:00",
       "slot": "2026-08-03T09:30",
       "date": "2026-08-03",
@@ -15227,14 +15209,32 @@
       "sjc_source": "estimated",
       "sjc_real": false,
       "sjc_updated": ""
+    },
+    {
+      "timestamp": "2026-11-01T07:30:00+07:00",
+      "slot": "2026-11-01T07:30",
+      "date": "2026-11-01",
+      "hour": 7,
+      "minute": 30,
+      "price": 3876.399902,
+      "change": 0,
+      "change_pct": 0,
+      "high": 0,
+      "low": 0,
+      "source": "gold-api.com",
+      "sjc_buy": 148.1,
+      "sjc_sell": 151.1,
+      "sjc_source": "estimated",
+      "sjc_real": false,
+      "sjc_updated": ""
     }
   ],
   "latest": {
-    "timestamp": "2026-11-01T04:00:00+07:00",
-    "slot": "2026-11-01T04:00",
+    "timestamp": "2026-11-01T07:30:00+07:00",
+    "slot": "2026-11-01T07:30",
     "date": "2026-11-01",
-    "hour": 4,
-    "minute": 0,
+    "hour": 7,
+    "minute": 30,
     "price": 3876.399902,
     "change": 0,
     "change_pct": 0,
@@ -16869,11 +16869,11 @@
       "sjc_updated": ""
     },
     {
-      "timestamp": "2026-11-01T04:00:00+07:00",
-      "slot": "2026-11-01T04:00",
+      "timestamp": "2026-11-01T07:30:00+07:00",
+      "slot": "2026-11-01T07:30",
       "date": "2026-11-01",
-      "hour": 4,
-      "minute": 0,
+      "hour": 7,
+      "minute": 30,
       "price": 3876.399902,
       "change": 0,
       "change_pct": 0,
@@ -16887,6 +16887,6 @@
       "sjc_updated": ""
     }
   ],
-  "updated_at": "2026-11-01T04:12:34.211906+07:00",
+  "updated_at": "2026-11-01T07:48:03.347289+07:00",
   "total_records": 846
 }
